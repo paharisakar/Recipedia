@@ -1,0 +1,29 @@
+th, td {
+    padding: 15px;
+    text-align: left;
+    color: white;
+    position: relative;
+    -webkit-animation-name: fadein;
+    -webkit-animation-duration: 1.5s;
+}
+@-webkit-keyframes fadein {
+    0%  {left:0px; top:200px;opacity: 0;}
+    80% {left:0px; top:-10px;opacity: 0.5;}
+    100% {left:0px; top:0px;opacity: 1;}
+}
+a:link{
+  color: white;
+  text-decoration: none;
+}
+p,caption {
+    white-space: pre;
+    color: white;
+  }
+  html{
+    background-image: url("info_background.jpg")no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
