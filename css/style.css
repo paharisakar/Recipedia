@@ -4,7 +4,6 @@
   margin: 0px;
 }
 
-/*Mixins*/
 /*Overlay*/
 .overlay {
   background: url(Background.jpeg) center center fixed;
@@ -21,7 +20,7 @@
 }
 
 /*Pattern Overlay*/
-.pat {
+.pattern {
   position: fixed;
   width: 100%;
   height: 100%;
@@ -29,29 +28,28 @@
   max-width: 100%;
 }
 
-/*Wrappers*/
-.wrapper {
-  width: 500px;
-  margin: 0 auto;
-  margin-top: 14%;
-  /*Typography*/
-  /*Form*/
-  /*Result*/
+/*Navigation Bar*/
+.nav {
+  position: fixed;
+  top: 20px;
+  right: 20px;
 }
-.wrapper h1 {
-  font: 70px Lobster;
-  color: #FFF;
-  text-align: center;
-  text-shadow: #000 0px 2px 2px;
-  margin-bottom: 40px;
+
+.nav li {
+  list-style: none;
+  float: left;
+  padding: 2px;
+  padding-left: 16px;
 }
-.wrapper a {
+
+.nav li a {
   color: #FFF;
   text-decoration: none;
   font: 16px Lobster;
   text-shadow: #000 0px 2px 2px;
 }
-.wrapper a:hover {
+
+.nav li a:hover {
   color: #ccc;
   -webkit-transition: 0.5s ease;
   -moz-transition: 0.5s ease;
@@ -59,7 +57,39 @@
   -ms-transition: 0.5s ease;
   transition: 0.5s ease;
 }
-.wrapper input {
+
+/*Content Container*/
+.content {
+  width: 500px;
+  margin: 0 auto;
+  margin-top: 14%;
+}
+
+.content h1 {
+  font: 70px Lobster;
+  color: #FFF;
+  text-align: center;
+  text-shadow: #000 0px 2px 2px;
+  margin-bottom: 40px;
+}
+
+.content a {
+  color: #FFF;
+  text-decoration: none;
+  font: 16px Lobster;
+  text-shadow: #000 0px 2px 2px;
+}
+
+.content a:hover {
+  color: #ccc;
+  -webkit-transition: 0.5s ease;
+  -moz-transition: 0.5s ease;
+  -o-transition: 0.5s ease;
+  -ms-transition: 0.5s ease;
+  transition: 0.5s ease;
+}
+
+.content input {
   width: 100%;
   padding: 10px;
   border: none;
@@ -70,7 +100,8 @@
   font: 14px Raleway;
   color: #bdbdbd;
 }
-.wrapper .result {
+
+.content .ingredients {
   color: #FFF;
   text-decoration: none;
   font: 16px Lobster;
@@ -79,129 +110,19 @@
   display: none;
   margin-bottom: 20px;
 }
-.wrapper ul li {
-  float: left;
-  padding: 0px 0px 0px 25px;
-}
 
-.user {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-}
-.user li {
-  list-style: none;
-  float: left;
-  padding: 2px;
-}
-.user li a {
-  color: #FFF;
+.content ul li {
+  padding: 0px 0px 4px 0px;
   text-decoration: none;
-  font: 16px Lobster;
-  text-shadow: #000 0px 2px 2px;
-}
-.user li a:hover {
-  color: #ccc;
-  -webkit-transition: 0.5s ease;
-  -moz-transition: 0.5s ease;
-  -o-transition: 0.5s ease;
-  -ms-transition: 0.5s ease;
-  transition: 0.5s ease;
-}
-
-.gif {
-  width: 16px;
-  height: 10px;
-  display: block;
-  background: url("http://marshall-design.com/codepen/gif.gif");
-  margin-left: 47%;
-  display: none;
-}
-
-.footer {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-.footer li {
-  float: left;
-  list-style: none;
-  padding: 5px;
-}
-.footer li a {
+  font: 16px Raleway;
   color: #FFF;
-  text-decoration: none;
-  font: 16px Lobster;
-  text-shadow: #000 0px 2px 2px;
-}
-.footer li a:hover {
-  color: #ccc;
-  -webkit-transition: 0.5s ease;
-  -moz-transition: 0.5s ease;
-  -o-transition: 0.5s ease;
-  -ms-transition: 0.5s ease;
-  transition: 0.5s ease;
 }
 
 .form {
   position: relative;
 }
 
-.res {
-  clear: both;
-  margin-top: 10px;
-  width: 85%;
-}
-.res li {
-  display: none;
-  margin-bottom: 30px;
-}
-.res h3, .res p {
-  color: #FFF;
-}
-.res h3 {
-  font: 17px Raleway;
-  font-weight: 700;
-  margin-bottom: 6px;
-  text-shadow: #000 0px 2px 2px;
-}
-.res p {
-  font: 13px Raleway;
-}
-
-/*Clearfix*/
-.clearfix:after {
-  content: ".";
-  display: block;
-  clear: both;
-  visibility: hidden;
-  line-height: 0;
-  height: 0;
-}
-
-.clearfix {
-  display: inline-block;
-}
-
-html[xmlns] .clearfix {
-  display: block;
-}
-
-* html .clearfix {
-  height: 1%;
-}
-
-/*Yioop Menu*/
-.yioop {
-  position: absolute;
-  top: 120;
-}
-
 /*Font Awesome Fix*/
 .fa {
   margin-right: 5px;
-}
-
-.fa-cog {
-  margin-left: 15px;
 }
