@@ -84,6 +84,14 @@
   margin-right: 50px;
 }
 
+.ingredients h1 {
+  font: 70px Lobster;
+  color: #FFF;
+  text-align: center;
+  text-shadow: #000 0px 2px 2px;
+  margin-bottom: 40px;
+}
+
 .ingredients input {
   width: 100%;
   padding: 10px;
