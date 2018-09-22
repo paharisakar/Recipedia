@@ -63,67 +63,155 @@
   margin-right: 5px;
 }
 
-/*Content Container*/
-.content {
+
+/* Flex-box that defines layout of ingredients and recipes containers */
+#layout-flexbox {
+  width: 100%;
+  min-width: 400px;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: flex-start;
+  justify-content: center;
+}
+
+/*Ingredients Container*/
+.ingredients {
   width: 400px;
-  margin: 0 auto;
-  margin-top: 14%;
-  position: relative;
+  margin-top: 10%;
+  margin-right: 50px;
 }
 
-.content h1 {
-  font: 70px Lobster;
-  color: #FFF;
-  text-align: center;
-  text-shadow: #000 0px 2px 2px;
-  margin-bottom: 40px;
-}
-
-.content a {
-  color: #FFF;
-  text-decoration: none;
-  font: 16px Lobster;
-  text-shadow: #000 0px 2px 2px;
-}
-
-.content a:hover {
-  color: #ccc;
-  -webkit-transition: 0.5s ease;
-  -moz-transition: 0.5s ease;
-  -o-transition: 0.5s ease;
-  -ms-transition: 0.5s ease;
-  transition: 0.5s ease;
-}
-
-.content input {
+.ingredients input {
   width: 100%;
   padding: 10px;
   border: none;
-  border-radius: 50px;
+  border-radius: 20px;
   box-shadow: #000 0px 1px 5px;
   margin-bottom: 10px;
   outline: none;
   font: 14px Raleway;
-  color: #bdbdbd;
+  color: #a4a4a4;
 }
 
-#ingredients-flexbox {
+#ingredient-input-container {
+  overflow: hidden;
+  padding-right: 1.5em;
+}
+
+#ingredient-add-button {
+  float: right;
+  background-color: #1e7ca8;
+  border-color: #165c7d;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  text-decoration: none;
+  font: 14px Raleway;
+  color: #ffffff;
+  padding: 10px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: #000 0px 1px 5px;
+  /* Make the add text non-selectable */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+#ingredient-add-button:hover {
+  cursor: pointer;
+  background-color: #1a6c92;
+  border-color: #124c67;
+}
+
+#ingredients-list-flexbox {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
+  align-content: flex-start;
 }
 
-.ingredient-item {
+.ingredients-list-item {
   opacity: 0.90;
-  background-color: #4a8d62;
-  border-color: #539e6e;
-  border-width: 2px;
+  background-color: #4a8d5d;
+  border-color: #386c47;
+  border-width: 1px;
   border-style: solid;
-  border-radius: 14px;
+  border-radius: 20px;
+  text-decoration: none;
+  font: 13px Raleway;
+  color: #ffffff;
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: #000 0px 1px 5px;
+  /* Make the ingredient text non-selectable */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.ingredients-list-item:hover {
+  cursor: pointer;
+  background-color: #5fab75;
+  border-color: #417c52;
+}
+
+/*Recipes Container*/
+.recipes {
+  width: 600px;
+  margin-top: 20px;
+}
+
+.recipes h1 {
+  font: 30px Lobster;
+  color: #FFF;
+  text-align: center;
+  text-shadow: #000 0px 2px 2px;
+  margin-bottom: 20px;
+}
+
+#recipes-list-flexbox {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.recipes-list-item {
+  background-color: #ffffff;
+  border: none;
+  border-radius: 20px;
   text-decoration: none;
   font: 14px Raleway;
-  color: #ffffff;
+  color: #333333;
   padding: 6px;
   margin: 5px;
+}
+
+.recipes-list-item h2 {
+  font: 18px Raleway;
+  color: #333333;
 }
