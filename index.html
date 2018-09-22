@@ -17,8 +17,11 @@
   </head>
 
   <body>
+
+
     <div class="overlay"></div>
-    <div class="pattern">
+      <div class="pattern">
+
       <div id="app">
 
         <ul class="nav">
@@ -27,20 +30,24 @@
         </ul>
 
         <div class="content">
-          <div class="form">
 
-            <h1>Recipedia</h1>
-              <input id="inputForm" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
-
-              <ul v-for="ingr in ingredientsList">
-                <li>{{ ingr }}</li>
-              </ul>
-
+          <h1>Recipedia</h1>
+ 
+          <input id="ingredient-input" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
+          <div id="ingredients-flexbox">
+            <ingredient-item
+              v-for="ingredient in ingredientsList"
+              v-bind:ingredient="ingredient"
+              v-on:delete-ingredient="deleteIngredient"
+            ></ingredient-item>
           </div>
+
         </div>
 
       </div>
     </div>
+
     <script src="js/app.js"></script>
+
   </body>
 </html>

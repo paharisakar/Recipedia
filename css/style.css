@@ -58,11 +58,17 @@
   transition: 0.5s ease;
 }
 
+/*Font Awesome Fix*/
+.fa {
+  margin-right: 5px;
+}
+
 /*Content Container*/
 .content {
-  width: 500px;
+  width: 400px;
   margin: 0 auto;
   margin-top: 14%;
+  position: relative;
 }
 
 .content h1 {
@@ -101,28 +107,23 @@
   color: #bdbdbd;
 }
 
-.content .ingredients {
-  color: #FFF;
+#ingredients-flexbox {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.ingredient-item {
+  opacity: 0.90;
+  background-color: #5cb6ee;
+  border-color: #1897e6;
+  border-width: 2px;
+  border-style: solid;
+  border-radius: 14px;
   text-decoration: none;
-  font: 16px Lobster;
-  text-shadow: #000 0px 2px 2px;
-  text-align: center;
-  display: none;
-  margin-bottom: 20px;
-}
-
-.content ul li {
-  padding: 0px 0px 4px 0px;
-  text-decoration: none;
-  font: 16px Raleway;
-  color: #FFF;
-}
-
-.form {
-  position: relative;
-}
-
-/*Font Awesome Fix*/
-.fa {
-  margin-right: 5px;
+  font: 14px Raleway;
+  color: #ffffff;
+  padding: 6px;
+  margin: 5px;
 }
