@@ -3,7 +3,7 @@
 
   <head>
     <meta charset="UTF-8">
-    <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>Recipedia</title>
 
@@ -45,7 +45,7 @@
             </div>
           </div>
 
-          <div class="recipes" v-if="recipes.length > 0">
+          <div class="recipes" v-if="show_recipes">
             <h1>We found some recipes for you... </h1>
             <div id="recipes-list-flexbox">
                 <recipes-list-item
