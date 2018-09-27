@@ -66,7 +66,7 @@ new Vue({
             })
             if (index != -1) {
                 this.ingredients.splice(index, 1)
-                if (this.recipes.length == 0) {
+                if (this.ingredients.length == 0) {
                     this.show_recipes = false
                 }
             }
