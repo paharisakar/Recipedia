@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" >
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--Fonts-->
+    <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700,900' rel='stylesheet' type='text/css'>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--Our stylesheet-->
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Recipedia</title>
+  </head>
+
+  <body>
+    <div class="overlay"></div><div class="pattern">
+
+      <div id="app">
+        <div id="layout-flexbox">
+
+          <div class="ingredients">
+            <h1>Recipedia</h1>
+            <div id="ingredient-add-button" v-on:click="addIngredient">Add</div>
+            <div id="ingredient-input-container">
+              <input id="ingredient-input" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
+            </div>
+            <div id="ingredients-list-flexbox">
+              <ingredients-list-item
+                v-for="ingredient in ingredients"
+                v-bind:ingredient="ingredient"
+                v-on:delete-ingredient="deleteIngredient"
+              ></ingredients-list-item>
+            </div>
+          </div>
+
+          <div class="recipes" v-if="show_recipes">
+            <h1>We found some recipes for you... </h1>
+            <div id="recipes-list-flexbox">
+                <recipes-list-item
+                  v-for="recipe in recipes"
+                  v-bind:recipe="recipe"
+                ></recipe-list-item>
+              </div>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="js/client.js"></script>
+
+  </body>
+</html>

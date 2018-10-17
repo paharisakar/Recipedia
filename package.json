@@ -1,0 +1,24 @@
+{
+  "name": "recipedia",
+  "version": "1.0.0",
+  "description": "Repo for CSE 442 Fall 2018 group project.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paharisakar/Recipedia.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paharisakar/Recipedia/issues"
+  },
+  "homepage": "https://github.com/paharisakar/Recipedia#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mysql": "^2.16.0",
+    "socket.io": "^2.1.1"
+  }
+}
