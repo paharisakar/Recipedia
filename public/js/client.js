@@ -1,22 +1,3 @@
-Vue.component('ingredients-list-item', {
-    props: ['ingredient'],
-    template: `
-        <div class="ingredients-list-item" v-on:click="$emit('delete-ingredient', ingredient.id)">
-            {{ ingredient.label }}
-        </div>
-    `,
-})
-
-Vue.component('recipes-list-item', {
-    props: ['recipe'],
-    template: `
-        <div class="recipes-list-item">
-            <a v-bind:href="'' + recipe.url" target="_blank"><h2> {{ recipe.title }} </h2></a>
-            {{ recipe.body }}
-        </div>
-    `
-})
-
 let socket = null
 
 const app = new Vue({
