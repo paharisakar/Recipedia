@@ -7,7 +7,8 @@ const app = new Vue({
         return {
             ingr_id_gen: 0,
             ingredients: [],
-            show_recipes: false,
+            possibleIngredients: [],
+            showRecipes: false,
             recipes: [
                 {
                     id: 1,
@@ -21,8 +22,11 @@ const app = new Vue({
 
     methods: {
         fetchRecipes: function() {
-            socket.emit('query_request', { id: socket.id, ingredients: this.ingredients })
+            socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients })
         },
+        //fetchPossibleIngredients: function() {
+        //    socket.emit('allIngredientsRequest', { id: socket.id })
+        //}, 
         addIngredient: function() {
             const input = document.getElementById('ingredient-input')
 
@@ -30,13 +34,11 @@ const app = new Vue({
                 this.ingr_id_gen++
                 this.ingredients.push( { id: this.ingr_id_gen, label: input.value } )
                 input.value = ""
-                if (!this.show_recipes) {
-                    this.show_recipes = true
+                if (!this.showRecipes) {
+                    this.showRecipes = true
                 }
-
                 this.fetchRecipes()
             }
-
         },
         deleteIngredient: function(id) {
             let index = this.ingredients.findIndex( function(item) {
@@ -45,7 +47,7 @@ const app = new Vue({
             if (index != -1) {
                 this.ingredients.splice(index, 1)
                 if (this.ingredients.length == 0) {
-                    this.show_recipes = false
+                    this.showRecipes = false
                 }
                 else {
                     this.fetchRecipes()
@@ -56,13 +58,19 @@ const app = new Vue({
 
     created: function() {
         socket = io()
+        console.log('gets called')
+        
     },
 
     mounted: function() {
-        socket.on('query_result', (recipes) => {
-            console.log('received query result')
+        socket.on('recipesResult', (recipes) => {
+            console.log('received recipes result')
             console.log(recipes)
             this.recipes = recipes
+        })
+        socket.on('allIngredientsResult', (allIngredients) => {
+            console.log(allIngredients)
+            this.possibleIngredients = allIngredients  
         })
     },
 })

@@ -11,12 +11,21 @@ http.listen(3000, () => console.log('Listening on port 3000...'))
 // Sockets
 io.on('connection', (socket) => {
     console.log('a client connected')
-
-    socket.on('query_request', (msg) => findRecipes(msg))
+    sendPossibleIngredients(socket.id)
+    socket.on('recipesRequest', (msg) => sendRecipes(msg))
 })
 
-// Database queries
-function findRecipes(msg) {
+// Serving database queries
+function sendPossibleIngredients(id) {
+    pool.query("select ingredient from ingredientMapping", function(err, result) {
+        if (err) throw err
+        let ingredients = []
+        for (const i of result) ingredients.push(i.ingredient)
+        io.to(id).emit('allIngredientsResult', ingredients)
+    })
+}
+
+function sendRecipes(msg) {
     const { id, ingredients } = msg
     console.log(ingredients)
 
@@ -32,8 +41,9 @@ function findRecipes(msg) {
                 'url': r.url,
             })
         }
-        console.log(recipes)
 
-        io.to(id).emit('query_result', recipes)
+        io.to(id).emit('recipesResult', recipes)
     })
 }
+
+
