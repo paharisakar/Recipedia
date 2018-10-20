@@ -27,12 +27,11 @@ function sendPossibleIngredients(id) {
 
 function sendRecipes(msg) {
     const { id, ingredients } = msg
-    console.log(ingredients)
 
-    let recipes = []
+
     pool.query("select * from recipes", function(err, result) {
         if (err) throw err
-
+        let recipes = []
         for (const r of result) {
             recipes.push({
                 'id': r.id,
@@ -46,4 +45,10 @@ function sendRecipes(msg) {
     })
 }
 
-
+// Query helpers
+function getRecipesFromIngredient(ingredient) {
+    pool.query("select * from ingredientMapping where ingredient = ${ingredient}", function(err, result) {
+        if(err) throw err
+        return 
+    })
+}
