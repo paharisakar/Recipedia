@@ -5,28 +5,17 @@ const app = new Vue({
 
     data() {
         return {
-            ingr_id_gen: 0,
-            ingredients: [],
             possibleIngredients: [],
+            ingr_id_gen: 0,
             showRecipes: false,
-            recipes: [
-                {
-                    id: 1,
-                    title: "Chana Masala",
-                    body: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip...",
-                    url: "https://minimalistbaker.com/easy-chana-masala/",
-                },
-            ],
+            ingredients: [],
+            recipes: [],
         }
     },
-
     methods: {
         fetchRecipes: function() {
             socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients })
         },
-        //fetchPossibleIngredients: function() {
-        //    socket.emit('allIngredientsRequest', { id: socket.id })
-        //}, 
         addIngredient: function() {
             const input = document.getElementById('ingredient-input')
 
@@ -57,19 +46,20 @@ const app = new Vue({
     },
 
     created: function() {
-        socket = io()
-        console.log('gets called')
-        
+        socket = io()   
     },
 
     mounted: function() {
-        socket.on('recipesResult', (recipes) => {
-            console.log('received recipes result')
-            console.log(recipes)
-            this.recipes = recipes
+        socket.on('recipesResult', (data) => {
+            this.recipes = data.map( recipe => {
+                return {
+                    title: recipe.dish, 
+                    body: recipe.details,
+                    url: "#"
+                }
+            })
         })
         socket.on('allIngredientsResult', (allIngredients) => {
-            console.log(allIngredients)
             this.possibleIngredients = allIngredients  
         })
     },
