@@ -17,6 +17,14 @@ const app = new Vue({
         fetchRecipes: function() {
             socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients })
         },
+
+        ingredientInputUpdate: function() {
+            const input = document.getElementById('ingredient-input')
+            const results = fuzzy.filter(input.value, this.possibleIngredients)
+            const matches = results.map(el => el.string)
+            console.log(matches)
+        },
+
         addIngredient: function() {
             const input = document.getElementById('ingredient-input')
 
@@ -30,6 +38,7 @@ const app = new Vue({
                 this.fetchRecipes()
             }
         },
+
         deleteIngredient: function(id) {
             let index = this.ingredients.findIndex( function(item) {
                 return item.id == id
@@ -61,7 +70,7 @@ const app = new Vue({
             })
         })
         socket.on('allIngredientsResult', (allIngredients) => {
-            this.possibleIngredients = allIngredients  
+            this.possibleIngredients = allIngredients
         })
     },
 })
