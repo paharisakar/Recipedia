@@ -12,6 +12,7 @@ const app = new Vue({
             recipes: [],
         }
     },
+    
     methods: {
         fetchRecipes: function() {
             socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients })

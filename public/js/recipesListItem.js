@@ -3,7 +3,7 @@ Vue.component('recipes-list-item', {
     template: `
         <div class="recipes-list-item">
             <a v-bind:href="'' + recipe.url" target="_blank"><h2> {{ recipe.title }} </h2></a>
-            {{ recipe.body }}
+            <p v-html="recipe.body"></p>
         </div>
     `
 })
