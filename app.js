@@ -53,6 +53,7 @@ function findRecipes(ingredients, getDeets, emitDeets) {
             }
             else {
                 console.log('Error during query in ingredientMapping table')
+                rawRecipeRows.push('NO_RESULT')
                 inner_callback(err)
             }
         })
@@ -60,10 +61,17 @@ function findRecipes(ingredients, getDeets, emitDeets) {
         if (!err) {
             let recipesLists = []
             for (r of rawRecipeRows) {
-                recipesLists.push(r.split(';'))
+                recipesLists = recipesLists.concat(r.split(';'))
             }
-            
-            getDeets(intersectOfLists(recipesLists), emitDeets)
+            console.log(recipesLists)
+            if (recipesLists.includes('NO_RESULT')) {
+              getDeets([], emitDeets)
+            }
+            else if(ingredients.length > 1){
+              getDeets(intersectOfLists(recipesLists), emitDeets)
+          }else {
+            getDeets(recipesLists, emitDeets)
+          }
         }
         else {
             console.log('Error finding recipes')
@@ -98,19 +106,36 @@ function getRecipeDetails(recipes, emitDeets) {
     })
 }
 
-function intersectOfLists(lists) {
-    if (!(lists.length)) return []
-    let result = lists[0]
-    for (let i = 1; i < lists.length; i++) {
-        result = intersect(result, lists[i])
-    }
-    return result
+function intersectOfLists(lists){
+    console.log(lists)
+      let object = {};
+      let result = [];
+      lists.forEach(function (item) {
+        if(!object[item])
+           object[item] = 0;
+           object[item] += 1;
+     })
+     for (var prop in object) {
+        if(object[prop] >= 2) {
+            result.push(prop);
+        }
+     }
+     return result;
 }
 
-function intersect(a, b) {
-    let d = {}
-    let result = []
-    for (let i = 0; i < b.length; i++) d[b[i]] = true
-    for (let i = 0; i < a.length; i++) if (d[a[i]]) result.push(a[i])
-    return result
-}
+// function intersectOfLists(lists) {
+//     if (!(lists.length)) return []
+//     let result = lists[0]
+//     for (let i = 1; i < lists.length; i++) {
+//         result = intersect(result, lists[i])
+//     }
+//     return result
+// }
+//
+// function intersect(a, b) {
+//     let d = {}
+//     let result = []
+//     for (let i = 0; i < b.length; i++) d[b[i]] = true
+//     for (let i = 0; i < a.length; i++) if (d[a[i]]) result.push(a[i])
+//     return result
+// }
