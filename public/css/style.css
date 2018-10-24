@@ -4,6 +4,8 @@
   margin: 0px;
 }
 
+
+
 /*Overlay*/
 .overlay {
   background: url(Background.jpeg) center center fixed;
@@ -66,7 +68,7 @@
 /* Flex-box that defines layout of ingredients and recipes containers */
 #layout-flexbox {
   width: 100%;
-  min-width: 500px;
+  min-width: 375px;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -74,13 +76,17 @@
   align-items: baseline;
   align-content: flex-start;
   justify-content: center;
+  padding: 0px;
+  margin: 0px;
 }
 
 /*Ingredients Container*/
 .ingredients {
-  width: 500px;
+  min-width: 350px;
+  max-width: 500px;
   margin-top: 10%;
-  margin-right: 50px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .ingredients h1 {
@@ -196,7 +202,6 @@
   align-content: flex-start;
 }
 
-
 .ingredients-list-item {
   opacity: 0.90;
   background-color: #4a8d5d;
@@ -234,7 +239,6 @@
 
 /*Recipes Container*/
 .recipes {
-  width: 600px;
   margin-top: 20px;
 }
 
@@ -249,11 +253,14 @@
 #recipes-list-flexbox {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
   justify-content: flex-start;
+  height: 60vh;
+  overflow: auto;
 }
 
 .recipes-list-item {
+  min-width: 350px;
+  max-width: 600px;
   background-color: #ffffff;
   border: none;
   border-radius: 20px;
@@ -261,7 +268,7 @@
   font: 14px Raleway;
   color: #333333;
   padding: 6px;
-  margin: 5px;
+  margin: 2px;
 }
 
 .recipes-list-item h2 {

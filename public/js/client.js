@@ -5,19 +5,20 @@ const app = new Vue({
 
     data() {
         return {
-            possibleIngredients: [],
-            ingr_id_gen: 0,
             showRecipes: false,
+            ingr_id_gen: 0,
+            reci_id_gen: 0,
             suggestions: [],
             ingredients: [],
             recipes: [],
-            recipesTitle: "We found some recipes for you... ",
+            possibleIngredients: [],
         }
     },
     
     methods: {
-        fetchRecipes: function() {
-            socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+        clickRecipe: function(id) {
+            let r = this.recipes.find(obj => obj.id == id)
+            r.showFull = !r.showFull
         },
 
         ingredientInputUpdate: function() {
@@ -32,6 +33,10 @@ const app = new Vue({
             else {
                 this.suggestions = []
             }
+        },
+
+        fetchRecipes: function() {
+            socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
         },
 
         addSuggestion: function(suggestion) {
@@ -82,13 +87,17 @@ const app = new Vue({
     mounted: function() {
         socket.on('recipesResult', (data) => {
             this.recipes = data.map( recipe => {
-                const look_after = 50
-                const snippet_end = recipe.details.substr(look_after).indexOf('<br>') + look_after
+                const look_after = 25
+                const next_space = recipe.details.substr(look_after).indexOf(' ') 
+                const next_break = recipe.details.substr(look_after).indexOf('<br>')
+                const snippet_end = Math.min(next_space, next_break) + look_after
+                this.reci_id_gen++
                 return {
-                    title: recipe.dish, 
+                    id: this.reci_id_gen,
+                    title: recipe.dish,
                     body: recipe.details,
-                    snippet: recipe.details.slice(0, snippet_end) + '..',
-                    url: "#"
+                    snippet: recipe.details.slice(0, snippet_end) + '...',
+                    showFull: false
                 }
             })
         })
