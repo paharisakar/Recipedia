@@ -25,6 +25,13 @@
             <div id="ingredient-input-container">
               <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
             </div>
+            <div id="suggestions-list-flexbox">
+              <suggestions-list-item
+                v-for="suggestion in suggestions"
+                v-bind:suggestion="suggestion"
+                v-on:add-suggestion="addSuggestion"
+              ></suggestions-list-item>
+            </div>
             <div id="ingredients-list-flexbox">
               <ingredients-list-item
                 v-for="ingredient in ingredients"
@@ -33,14 +40,19 @@
               ></ingredients-list-item>
             </div>
           </div>
-          <div class="recipes" v-if="showRecipes">
-            <h1>We found some recipes for you... </h1>
-            <div id="recipes-list-flexbox">
-                <recipes-list-item
-                  v-for="recipe in recipes"
-                  v-bind:recipe="recipe"
-                ></recipe-list-item>
-              </div>
+          <div class ="recipes" v-if="showRecipes">
+            <div v-if="recipes.length">
+              <h1>{{ recipesTitle }}</h1>
+              <div id="recipes-list-flexbox">
+                  <recipes-list-item
+                    v-for="recipe in recipes"
+                    v-bind:recipe="recipe"
+                  ></recipes-list-item>
+                </div>
+            </div>
+            <div v-else>
+              <h1>No recipes found...</h1>
+            </div>
           </div>
         </div>
       </div>
@@ -48,7 +60,8 @@
     
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
-		<script src="js/fuzzy-min.js"></script>
+    <script src="js/fuzzy-min.js"></script>
+    <script src="js/suggestionsListItem.js"></script>
     <script src="js/ingredientsListItem.js"></script>
     <script src="js/recipesListItem.js"></script>
     <script src="js/client.js"></script>

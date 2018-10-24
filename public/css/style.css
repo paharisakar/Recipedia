@@ -63,11 +63,10 @@
   margin-right: 5px;
 }
 
-
 /* Flex-box that defines layout of ingredients and recipes containers */
 #layout-flexbox {
   width: 100%;
-  min-width: 400px;
+  min-width: 500px;
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -79,7 +78,7 @@
 
 /*Ingredients Container*/
 .ingredients {
-  width: 400px;
+  width: 500px;
   margin-top: 10%;
   margin-right: 50px;
 }
@@ -111,8 +110,9 @@
 
 #ingredient-add-button {
   float: right;
-  background-color: #1e7ca8;
-  border-color: #165c7d;
+  background-color: #1a6c92;
+  border-color: #124c67;
+
   border-width: 1px;
   border-style: solid;
   border-radius: 20px;
@@ -125,7 +125,7 @@
   box-shadow: #000 0px 1px 5px;
   /* Make the add text non-selectable */
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
+  -webkit-user-select: none; /* Safarzi */
    -khtml-user-select: none; /* Konqueror HTML */
      -moz-user-select: none; /* Firefox */
       -ms-user-select: none; /* Internet Explorer/Edge */
@@ -140,8 +140,52 @@
 
 #ingredient-add-button:hover {
   cursor: pointer;
-  background-color: #1a6c92;
-  border-color: #124c67;
+  background-color: #1e7ca8;
+  border-color: #165c7d;
+}
+
+#suggestions-list-flexbox {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-content: flex-start;
+}
+
+.suggestions-list-item {
+  opacity: 0.90;
+  background-color: #ffe053;
+  border-color: #ecc100;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  text-decoration: none;
+  font: 13px Raleway;
+  color: #444444;
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  box-shadow: #000 0px 1px 5px;
+  /* Make the ingredient text non-selectable */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
+.suggestions-list-item:hover {
+  cursor: pointer;
+  background-color: #ffeea0;
+  border-color: #ffd206;
 }
 
 #ingredients-list-flexbox {
@@ -151,6 +195,7 @@
   justify-content: flex-start;
   align-content: flex-start;
 }
+
 
 .ingredients-list-item {
   opacity: 0.90;

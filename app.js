@@ -5,7 +5,6 @@ const io = require('socket.io')(http)
 const async = require('async')
 const pool = require('./server/database.js')
 
-
 // Serve the public folder statically
 app.use(express.static(__dirname + '/public'))
 http.listen(3000, () => console.log('Listening on port 3000...'))
@@ -31,18 +30,17 @@ function sendPossibleIngredients(id) {
 
 function sendRecipes(msg) {
     const { id, ingredients } = msg
-    const labels = ingredients.map(a => a.label)
 
-    console.log('---')
-    console.log('Searched with: ')
-    console.log(labels)
-
-    findRecipes(labels, getRecipeDetails, function(deets) {
+    findRecipes(ingredients, getRecipeDetails, function(deets) {
         io.to(id).emit('recipesResult', deets)
     })
 }
 
 function findRecipes(ingredients, getDeets, emitDeets) {
+    console.log('---')
+    console.log('Searched with: ')
+    console.log(ingredients)
+
     let rawRecipeRows = []
     async.forEachOf(ingredients, function(ingr, i, inner_callback) {
         const q = "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
@@ -61,17 +59,15 @@ function findRecipes(ingredients, getDeets, emitDeets) {
         if (!err) {
             let recipesLists = []
             for (r of rawRecipeRows) {
-                recipesLists = recipesLists.concat(r.split(';'))
+                recipesLists.push(r.split(';'))
             }
             console.log(recipesLists)
-            if (recipesLists.includes('NO_RESULT')) {
-              getDeets([], emitDeets)
+            if (recipesLists.includes(['NO_RESULT'])) {
+                getDeets([], emitDeets)
             }
-            else if(ingredients.length > 1){
-              getDeets(intersectOfLists(recipesLists), emitDeets)
-          }else {
-            getDeets(recipesLists, emitDeets)
-          }
+            else {
+                getDeets(intersectOfLists(recipesLists), emitDeets)
+            }
         }
         else {
             console.log('Error finding recipes')
@@ -106,36 +102,18 @@ function getRecipeDetails(recipes, emitDeets) {
     })
 }
 
-function intersectOfLists(lists){
-    console.log(lists)
-      let object = {};
-      let result = [];
-      lists.forEach(function (item) {
-        if(!object[item])
-           object[item] = 0;
-           object[item] += 1;
-     })
-     for (var prop in object) {
-        if(object[prop] >= 2) {
-            result.push(prop);
-        }
-     }
-     return result;
+function intersectOfLists(lists) {
+    if (!(lists.length)) return []
+    let result = lists[0]
+    for (let i = 1; i < lists.length; i++) {
+        result = intersect(result, lists[i])
+    }
+    return result
 }
-
-// function intersectOfLists(lists) {
-//     if (!(lists.length)) return []
-//     let result = lists[0]
-//     for (let i = 1; i < lists.length; i++) {
-//         result = intersect(result, lists[i])
-//     }
-//     return result
-// }
-//
-// function intersect(a, b) {
-//     let d = {}
-//     let result = []
-//     for (let i = 0; i < b.length; i++) d[b[i]] = true
-//     for (let i = 0; i < a.length; i++) if (d[a[i]]) result.push(a[i])
-//     return result
-// }
+function intersect(a, b) {
+    let d = {}
+    let result = []
+    for (let i = 0; i < b.length; i++) d[b[i]] = true
+    for (let i = 0; i < a.length; i++) if (d[a[i]]) result.push(a[i])
+    return result
+}
