@@ -83,7 +83,7 @@
 /*Ingredients Container*/
 .ingredients {
   min-width: 350px;
-  max-width: 500px;
+  width: 450px;
   margin-top: 10%;
   margin-left: 10px;
   margin-right: 10px;
@@ -118,7 +118,6 @@
   float: right;
   background-color: #1a6c92;
   border-color: #124c67;
-
   border-width: 1px;
   border-style: solid;
   border-radius: 20px;
@@ -128,20 +127,6 @@
   padding: 10px;
   margin-right: 8px;
   margin-bottom: 8px;
-  box-shadow: #000 0px 1px 5px;
-  /* Make the add text non-selectable */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safarzi */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
-  -webkit-transition: 0.2s ease;
-  -moz-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  -ms-transition: 0.2s ease;
-  transition: 0.2s ease;
 }
 
 #ingredient-add-button:hover {
@@ -160,32 +145,9 @@
 }
 
 .suggestions-list-item {
-  opacity: 0.90;
   background-color: #ffe053;
   border-color: #ecc100;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 20px;
-  text-decoration: none;
-  font: 13px Raleway;
   color: #444444;
-  padding: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  box-shadow: #000 0px 1px 5px;
-  /* Make the ingredient text non-selectable */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
-  -webkit-transition: 0.2s ease;
-  -moz-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  -ms-transition: 0.2s ease;
-  transition: 0.2s ease;
 }
 
 .suggestions-list-item:hover {
@@ -203,32 +165,9 @@
 }
 
 .ingredients-list-item {
-  opacity: 0.90;
   background-color: #4a8d5d;
   border-color: #386c47;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 20px;
-  text-decoration: none;
-  font: 13px Raleway;
   color: #ffffff;
-  padding: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
-  box-shadow: #000 0px 1px 5px;
-  /* Make the ingredient text non-selectable */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
-  -webkit-transition: 0.2s ease;
-  -moz-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  -ms-transition: 0.2s ease;
-  transition: 0.2s ease;
 }
 
 .ingredients-list-item:hover {
@@ -260,18 +199,64 @@
 
 .recipes-list-item {
   min-width: 350px;
-  max-width: 600px;
+  max-width: 550px;
   background-color: #ffffff;
   border: none;
   border-radius: 20px;
-  text-decoration: none;
-  font: 14px Raleway;
-  color: #333333;
-  padding: 6px;
-  margin: 2px;
+  padding: 10px;
+  margin: 3px;
 }
 
-.recipes-list-item h2 {
-  font: 18px Raleway;
+.recipes-list-item h3 {
+  font-family: 'Merriweather', serif;
+  font-size: 16px;
   color: #333333;
+  font-weight: normal;
+  text-decoration: none;
+  padding: 0px;
+  margin: 0px;
+  line-height: 0.95;
+}
+
+.recipes-list-item p {
+  padding: 0px;
+  margin: 0px;
+  font: 14px Raleway;
+  color: #333333;
+  text-decoration: none;
+}
+
+.recipes-list-item:hover {
+  cursor: pointer;
+  background-color: #daecf3;
+  border-color: #333;
+}
+
+.suggestions-list-item, .ingredients-list-item {
+  opacity: 0.90;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  text-decoration: none;
+  font: 13px Raleway;
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+#ingredient-add-button, .suggestions-list-item, .ingredients-list-item, .recipes-list-item {
+  box-shadow: #000 0px 1px 5px;
+  /* Make the ingredient text non-selectable */
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+   -khtml-user-select: none; /* Konqueror HTML */
+     -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+          user-select: none; /* Non-prefixed version, currently
+                                supported by Chrome and Opera */
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
 }

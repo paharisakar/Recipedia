@@ -6,6 +6,7 @@
     <!--Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700,900' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Merriweather:400i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <!--Our stylesheet-->
     <link rel="stylesheet" href="css/style.css">
@@ -14,14 +15,10 @@
   <body>
     <div class="overlay"></div><div class="pattern">
       <div id="app">
-        <ul class="nav">
-          <li><a href="sign-up-and-login-form/sign_in.html"><i class="fa fa-user"></i>Sign In</a></li>
-          <li><a href="info/info.html"><i class="fa fa-newspaper-o"></i>About us</a></li>
-        </ul>
         <div id="layout-flexbox">
           <div class="ingredients">
             <h1>Recipedia</h1>
-            <div id="ingredient-add-button" v-on:click="addIngredient">Add</div>
+            <div id="ingredient-add-button" v-on:click="addIngredient" title="Click to add ingredient">Add</div>
             <div id="ingredient-input-container">
               <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
             </div>

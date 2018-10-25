@@ -23,7 +23,7 @@ const app = new Vue({
 
         ingredientInputUpdate: function() {
             const input = document.getElementById('ingredient-input')
-            if (input.value.length > 1 ) {
+            if (input.value.length > 0 ) {
                 let results = fuzzy.filter(input.value, this.possibleIngredients)
                 if (results.length > 5) {
                     results = results.slice(0, 5)
