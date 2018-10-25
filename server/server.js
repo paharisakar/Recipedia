@@ -39,8 +39,7 @@ class Server {
     
         let rawRecipeRows = []
         this.async.forEachOf(ingredients, (ingr, i, inner_callback) => {
-            const q = "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
-            this.pool.query(q, (err, result) => {
+            this.pool.query(this.mappingQuery(ingr), (err, result) => {
                 if (!err && result.length) {
                     rawRecipeRows.push(result[0].recipe)
                     inner_callback(null)
@@ -77,8 +76,7 @@ class Server {
     
         let recipeDetails = []
         this.async.forEachOf(recipes, (name, i, inner_callback) => {
-            const q = "select instructions from instruction where Dish = \"" + name + "\""
-            this.pool.query(q, (err, result) => {
+            this.pool.query(this.instructionsQuery(name), (err, result) => {
                 if (!err && result.length) {
                     recipeDetails.push({ dish: name, details: result[0].instructions })
                     inner_callback(null)
@@ -98,6 +96,14 @@ class Server {
         })
     }
     
+    mappingQuery(ingr) {
+        return "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
+    }
+
+    instructionsQuery(name) {
+        return "select instructions from instruction where Dish = \"" + name + "\""
+    }
+
     intersectOfLists(lists) {
         if (!(lists.length)) return []
         let result = lists[0]
