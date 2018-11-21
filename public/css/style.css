@@ -4,7 +4,17 @@
   margin: 0px;
 }
 
+/*Loading gif*/
+#Loading{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: #fff
+  url('https://cdn.dribbble.com/users/2140642/screenshots/4301537/rodrigosloader.gif')
+  no-repeat center;
+  z-index = 999999;
 
+}
 
 /*Overlay*/
 .overlay {
