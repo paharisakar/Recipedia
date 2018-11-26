@@ -3,17 +3,15 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--Fonts-->
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700,900' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400i" rel="stylesheet">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <!--Our stylesheet-->
     <link rel="stylesheet" href="css/style.css">
     <title>Recipedia</title>
   </head>
-  <body = onload="LoadBySakar()">
-    <div id = "Loading"></div>
+  <body onload="load()">
+    <div id="loading"></div>
     <div class="overlay"></div><div class="pattern">
       <div id="app">
         <div id="layout-flexbox">
@@ -56,20 +54,13 @@
         </div>
       </div>
     </div>
-    <script>
-      var preloader= document.getElementById('Loading');
-      function LoadBySakar(){
-        preloader.style.display = 'none';
-      }
-
-    </script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/fuzzy-min.js"></script>
+    <script src="js/load.js"></script>
     <script src="js/suggestionsListItem.js"></script>
     <script src="js/ingredientsListItem.js"></script>
     <script src="js/recipesListItem.js"></script>
     <script src="js/client.js"></script>
-
   </body>
 </html>
