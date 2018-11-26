@@ -7,24 +7,25 @@ class Server {
     }
 
     init() {
+
         this.io.on('connection', (socket) => {
             console.log('> A client connected')
             this.sendPossibleIngredients(socket.id)
-            socket.on('recipesRequest', (msg) => this.sendRecipes(msg))
+            socket.on('recipesFromIngredsRequest', (msg) => this.sendRecipes(msg))
         })
     }
 
     sendPossibleIngredients(id) {
-        this.pool.query("select ingredient from ingredientMapping", (err, result) => {
+        this.pool.query(this.allIngredients(), (err, result) => {
             if (err) throw err
             let ingredients = []
             for (const i of result) {
                 ingredients.push(i.ingredient)
             }
-            this.io.to(id).emit('allIngredientsResult', ingredients)
+            this.io.to(id).emit('possibleIngredientsResult', ingredients)
         })
     }
-    
+
     sendRecipes(msg) {
         const { id, ingredients } = msg
         this.findRecipes(ingredients, (deets) => {
@@ -76,14 +77,19 @@ class Server {
     
         let recipeDetails = []
         this.async.forEachOf(recipes, (name, i, inner_callback) => {
-            this.pool.query(this.instructionsQuery(name), (err, result) => {
+            this.pool.query(this.urlsFromRecipe(name), (err, result) => {
                 if (!err && result.length) {
-                    recipeDetails.push({ dish: name, details: result[0].instructions })
+                    const r = result[0]
+                    recipeDetails.push({
+                        name: r.recipeName,
+                        url: r.recipeUrl,
+                        img: r.imageUrl
+                    })
                     inner_callback(null)
                 }
                 else {
                     inner_callback(err)
-                    console.log('Error during query in instruction table')
+                    console.log('Error during query in recipeUrl table')
                 }
             })
         }, (err) => {
@@ -95,14 +101,22 @@ class Server {
             }
         })
     }
-    
+
+    // Queries
+
     mappingQuery(ingr) {
         return "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
     }
 
-    instructionsQuery(name) {
-        return "select instructions from instruction where Dish = \"" + name + "\""
+    urlsFromRecipe(name) {
+        return "select * from recipeUrl where recipeName = \"" + name + "\""
     }
+
+    allIngredients() {
+        return "select ingredient from ingredientMapping"
+    }
+
+    // Utility functions
 
     intersectOfLists(lists) {
         if (!(lists.length)) return []

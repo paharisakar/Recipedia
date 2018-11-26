@@ -18,7 +18,7 @@ const app = new Vue({
     methods: {
         clickRecipe: function(id) {
             let r = this.recipes.find(obj => obj.id == id)
-            r.showFull = !r.showFull
+            //r.showFull = !r.showFull
         },
 
         ingredientInputUpdate: function() {
@@ -36,7 +36,7 @@ const app = new Vue({
         },
 
         fetchRecipes: function() {
-            socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+            socket.emit('recipesFromIngredsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
         },
 
         addSuggestion: function(suggestion) {
@@ -87,21 +87,17 @@ const app = new Vue({
     mounted: function() {
         socket.on('recipesResult', (data) => {
             this.recipes = data.map( recipe => {
-                const look_after = 25
-                const next_space = recipe.details.substr(look_after).indexOf(' ') 
-                const next_break = recipe.details.substr(look_after).indexOf('<br>')
-                const snippet_end = Math.min(next_space, next_break) + look_after
                 this.reci_id_gen++
                 return {
                     id: this.reci_id_gen,
-                    title: recipe.dish,
-                    body: recipe.details,
-                    snippet: recipe.details.slice(0, snippet_end) + '...',
-                    showFull: false
+                    title: recipe.name,
+                    url: recipe.url,
+                    img: recipe.img
                 }
             })
         })
-        socket.on('allIngredientsResult', (allIngredients) => {
+
+        socket.on('possibleIngredientsResult', (allIngredients) => {
             this.possibleIngredients = allIngredients
         })
     },

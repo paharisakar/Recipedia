@@ -217,7 +217,7 @@
   margin: 3px;
 }
 
-.recipes-list-item h3 {
+.recipes-list-item a {
   font-family: 'Merriweather', serif;
   font-size: 16px;
   color: #333333;
@@ -226,6 +226,10 @@
   padding: 0px;
   margin: 0px;
   line-height: 0.95;
+}
+
+.recipes-list-item img {
+  height: 200px;
 }
 
 .recipes-list-item p {
@@ -256,14 +260,7 @@
 
 #ingredient-add-button, .suggestions-list-item, .ingredients-list-item, .recipes-list-item {
   box-shadow: #000 0px 1px 5px;
-  /* Make the ingredient text non-selectable */
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-   -khtml-user-select: none; /* Konqueror HTML */
-     -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
-          user-select: none; /* Non-prefixed version, currently
-                                supported by Chrome and Opera */
+
   -webkit-transition: 0.2s ease;
   -moz-transition: 0.2s ease;
   -o-transition: 0.2s ease;
