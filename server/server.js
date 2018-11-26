@@ -77,13 +77,14 @@ class Server {
     
         let recipeDetails = []
         this.async.forEachOf(recipes, (name, i, inner_callback) => {
-            this.pool.query(this.urlsFromRecipe(name), (err, result) => {
+            this.pool.query(this.detailsFromRecipe(name), (err, result) => {
                 if (!err && result.length) {
                     const r = result[0]
                     recipeDetails.push({
                         name: r.recipeName,
                         url: r.recipeUrl,
-                        img: r.imageUrl
+                        image: r.imageUrl,
+                        description: r.description
                     })
                     inner_callback(null)
                 }
@@ -108,7 +109,7 @@ class Server {
         return "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
     }
 
-    urlsFromRecipe(name) {
+    detailsFromRecipe(name) {
         return "select * from recipeUrl where recipeName = \"" + name + "\""
     }
 

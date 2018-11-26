@@ -55,7 +55,7 @@
 .footer #container{
 	margin-top:5px;
 	width:100%;
-height:100%;
+ height:100%;
   position:relative;
   top:0;
   left:0;
@@ -230,6 +230,27 @@ height:100%;
   align-content: flex-start;
 }
 
+.suggestions-list-item, .ingredients-list-item {
+  opacity: 0.90;
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 20px;
+  text-decoration: none;
+  font: 13px Raleway;
+  padding: 8px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+#ingredient-add-button, .suggestions-list-item, .ingredients-list-item, .recipes-list-item {
+  box-shadow: #000 0px 1px 5px;
+  -webkit-transition: 0.2s ease;
+  -moz-transition: 0.2s ease;
+  -o-transition: 0.2s ease;
+  -ms-transition: 0.2s ease;
+  transition: 0.2s ease;
+}
+
 .suggestions-list-item {
   background-color: #ffe053;
   border-color: #ecc100;
@@ -293,53 +314,46 @@ height:100%;
   margin: 3px;
 }
 
-.recipes-list-item a {
-  font-family: 'Merriweather', serif;
-  font-size: 16px;
-  color: #333333;
-  font-weight: normal;
-  text-decoration: none;
-  padding: 0px;
-  margin: 0px;
-  line-height: 0.95;
-}
-
-.recipes-list-item img {
-  height: 200px;
-}
-
-.recipes-list-item p {
-  padding: 0px;
-  margin: 0px;
-  font: 14px Raleway;
-  color: #333333;
-  text-decoration: none;
-}
-
 .recipes-list-item:hover {
   cursor: pointer;
   background-color: #daecf3;
   border-color: #333;
 }
 
-.suggestions-list-item, .ingredients-list-item {
-  opacity: 0.90;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 20px;
+.recipes-list-item a {
   text-decoration: none;
-  font: 13px Raleway;
-  padding: 8px;
-  margin-right: 8px;
-  margin-bottom: 8px;
 }
 
-#ingredient-add-button, .suggestions-list-item, .ingredients-list-item, .recipes-list-item {
-  box-shadow: #000 0px 1px 5px;
+.recipes-list-item h2 {
+  font-family: 'Helvetica';
+  font-size: 19px;
+  color: #2401a9;
+  font-weight: normal;
+}
 
-  -webkit-transition: 0.2s ease;
-  -moz-transition: 0.2s ease;
-  -o-transition: 0.2s ease;
-  -ms-transition: 0.2s ease;
-  transition: 0.2s ease;
+.recipes-list-item h3 {
+  font-family: 'Helvetica';
+  font-size: 14px;
+  color: #176725;
+  font-weight: normal;
+}
+
+.recipes-list-item p {
+  font-family: 'Helvetica';
+  font-size: 14px;
+  color: #333333;
+}
+
+.recipes-list-item-thumbnail {
+
+  float: left;
+}
+
+.recipes-list-item img {
+  display: block;
+  width: 100px;
+}
+
+.recipes-list-item-description {
+  margin-left: 110px;
 }

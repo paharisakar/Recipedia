@@ -92,7 +92,8 @@ const app = new Vue({
                     id: this.reci_id_gen,
                     title: recipe.name,
                     url: recipe.url,
-                    img: recipe.img
+                    image: recipe.image,
+                    description: recipe.description
                 }
             })
         })
