@@ -104,7 +104,7 @@
   height: 100%;
   top: 0;
   left: 0;
-  z-index: -1;
+  z-index: -2;
 }
 
 /*Pattern Overlay*/
@@ -114,6 +114,7 @@
   height: 100%;
   background: rgba(0, 0, 0, 0.4) url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAGklEQVQIW2NkYGD4D8SMQAwGcAY2AbBKDBUAVuYCBQPd34sAAAAASUVORK5CYII=");
   max-width: 100%;
+  z-index: -1;
 }
 
 /*Navigation Bar*/
@@ -155,7 +156,6 @@
 #layout-flexbox {
   width: 100%;
   min-width: 375px;
-  height: 100%;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -297,21 +297,21 @@
 }
 
 #recipes-list-flexbox {
+  max-width: 900px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: flex-start;
-  height: 60vh;
-  overflow: auto;
+  flex-wrap: wrap;
 }
 
 .recipes-list-item {
-  min-width: 350px;
-  max-width: 550px;
+  width: 270px;
   background-color: #ffffff;
-  border: none;
+  border-style: solid;
+  border-color: #fff;
+  border-width: 0px;
   border-radius: 20px;
-  padding: 10px;
-  margin: 3px;
+  margin: 10px;
 }
 
 .recipes-list-item:hover {
@@ -324,36 +324,16 @@
   text-decoration: none;
 }
 
-.recipes-list-item h2 {
-  font-family: 'Helvetica';
-  font-size: 19px;
-  color: #2401a9;
-  font-weight: normal;
+.recipes-list-item img {
+  width: 270px;
+  height: 180px;
+  border-radius: 20px 20px 0px 0px;
 }
 
 .recipes-list-item h3 {
-  font-family: 'Helvetica';
+  font-family: 'Raleway';
   font-size: 14px;
-  color: #176725;
+  color: #333;
   font-weight: normal;
-}
-
-.recipes-list-item p {
-  font-family: 'Helvetica';
-  font-size: 14px;
-  color: #333333;
-}
-
-.recipes-list-item-thumbnail {
-
-  float: left;
-}
-
-.recipes-list-item img {
-  display: block;
-  width: 100px;
-}
-
-.recipes-list-item-description {
-  margin-left: 110px;
+  padding: 10px;
 }
