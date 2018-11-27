@@ -20,13 +20,16 @@
             <h1>Recipedia</h1>
 
             <div id="ingredient-add-button" v-on:click="addIngredient" title="Click to add ingredient">Add</div>
-            <div id="ingredient-input-container">
-
-              <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
-              <label class="switch">
+            <div id = "ingredient-switch">
+            	<label class="switch">
                 <input type="checkbox">
                 <span class="slider round"></span>
               </label>
+          </div>
+            <div id="ingredient-input-container">
+
+              <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
+              
             </div>
             <div id="suggestions-list-flexbox">
               <suggestions-list-item
@@ -66,7 +69,7 @@
         <div id="container">
           <div id="cont">
             <div class="footer_center">
-    	         <h3>We would like to Thank </h3>
+    	         <h3>We would like to thank </h3>
                <h4><a href ="https://sugarspiceslife.com/"><cite>SUGAR SPICES LIFE</cite></a></h4>
                <p> For amazing recipes.</p>
             </div>
