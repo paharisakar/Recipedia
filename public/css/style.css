@@ -343,6 +343,20 @@ input:checked + .slider:before {
   margin-bottom: 8px;
 }
 
+
+
+
+
+#ingredient-switch {
+  float: left;
+  text-decoration: none;
+  font: 14px Raleway;
+  color: #ffffff;
+
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
 #ingredient-add-button:hover {
   cursor: pointer;
   background-color: #1e7ca8;
