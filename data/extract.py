@@ -100,8 +100,6 @@ for d, i in all_dishes.items():
 
 
 
-
-
 df = pd.DataFrame(all_ing, columns=['Ingredient', 'Name of Dish'])
 df.to_csv('all_ing.csv')
 
@@ -109,3 +107,25 @@ df2 = pd.DataFrame(all_ins, columns=['Name of Dish', 'Instruction'])
 df2.to_csv('all_ins.csv')
 
 print(df.groupby('Name of Dish').groups)
+
+norm_ingredients = set()
+
+files = ['allr_recipes.txt', 'epic_recipes.txt', 'menu_recipes.txt']
+for f in files:
+    for line in open(f):
+        # print(line)
+        norm_ingredients.update(list(line.rstrip('\n').split('\t'))[1:])
+
+
+def clean_ingredient_string(receipe):
+
+    receipe = str.lower(receipe)
+
+    receipe = receipe.replace('&', '').replace('(', '').replace(')','')
+    receipe = receipe.replace('\'', '').replace('\\', '').replace(',','')
+    receipe = receipe.replace('.', '').replace('%', '').replace('/','')
+
+    receipe = ''.join([i for i in receipe if not i.isdigit()])
+
+    # Return a list with unique elements from the norm_ingredients list
+    return list(set([ingredient for ingredient in norm_ingredients if ingredient in receipe]))
