@@ -12,6 +12,7 @@ const app = new Vue({
             ingredients: [],
             recipes: [],
             possibleIngredients: [],
+            filterOption: "",
         }
     },
     
@@ -19,6 +20,15 @@ const app = new Vue({
         clickRecipe: function(id) {
             let r = this.recipes.find(obj => obj.id == id)
             //r.showFull = !r.showFull
+        },
+
+        changedFilter: function() {
+            if (this.filterOption == "A") {1
+                this.recipes.reverse()
+            }
+            else if (this.filterOption == "B") {
+                this.recipes.reverse()
+            }
         },
 
         ingredientInputUpdate: function() {
