@@ -1,7 +1,14 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE, multilanguagePage: true}, 'google_translate_element');
+      }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,700,900' rel='stylesheet' type='text/css'>
@@ -12,12 +19,19 @@
   </head>
   <body onload="load()">
     <div id="loading"></div>
-    <div class="overlay"></div><div class="pattern">
+    <div class="overlay"></div>
+    <div class="pattern"></div>
       <div id="app">
         <div id="layout-flexbox">
           <div class="ingredients">
             <h1>Recipedia</h1>
             <div id="ingredient-add-button" v-on:click="addIngredient" title="Click to add ingredient">Add</div>
+            <div id = "ingredient-switch">
+            	<label class="switch">
+                <input type="checkbox">
+                <span class="slider round"></span>
+              </label>
+            </div>
             <div id="ingredient-input-container">
               <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="addIngredient" placeholder="What's in the fridge?">
             </div>
@@ -39,6 +53,14 @@
           <div class="recipes" v-if="showRecipes">
             <div v-if="recipes.length">
               <h1>We found some recipes for you... </h1>
+
+              <select v-model="filterOption" v-on:click="changedFilter">
+                <option disabled value="">Please select one</option>
+                <option>A</option>
+                <option>B</option>
+                <option>C</option>
+              </select>
+
               <div id="recipes-list-flexbox">
                   <recipes-list-item
                     v-for="recipe in recipes"
@@ -53,19 +75,19 @@
           </div>
         </div>
       </div>
-    </div>
     <div class="footer">
       <div id="button"></div>
         <div id="container">
           <div id="cont">
             <div class="footer_center">
-    	         <h3>We would like to Thank </h3>
+    	         <h3>We would like to thank </h3>
                <h4><a href ="https://sugarspiceslife.com/"><cite>SUGAR SPICES LIFE</cite></a></h4>
                <p> For amazing recipes.</p>
             </div>
           </div>
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/fuzzy-min.js"></script>
@@ -75,4 +97,5 @@
     <script src="js/recipesListItem.js"></script>
     <script src="js/client.js"></script>
   </body>
+
 </html>
