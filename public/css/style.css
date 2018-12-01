@@ -15,6 +15,7 @@
 .switch input {
   opacity: 0;
   width: 0;
+
   height: 0;
 }
 
@@ -22,10 +23,11 @@
   position: absolute;
   cursor: pointer;
   top: 0;
-  left: 0;
+  left: 80;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  width: 150px;
+  background-color: #1a6c92;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -51,9 +53,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(114px);
+  -ms-transform: translateX(114px);
+  transform: translateX(114px);
 }
 
 
@@ -66,9 +68,25 @@ input:checked + .slider:before {
 }
 
 
-/*slider Button end*/
 
+.slider:after
+{
+ content:'Recipes';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+ 
+}
 
+input:checked + .slider:after
+{  
+  content:'Ingredients';
+}
 
 /*Footer*/
 .footer #button{
