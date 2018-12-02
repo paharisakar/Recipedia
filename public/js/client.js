@@ -12,32 +12,38 @@ const app = new Vue({
             ingredients: [],
             recipes: [],
             possibleIngredients: [],
-            filterOption: "",
+            filterOption: "1",
         }
     },
 
     methods: {
         clickRecipe: function(id) {
             let r = this.recipes.find(obj => obj.id == id)
-            //r.showFull = !r.showFull
         },
 
-        changedFilter: function() {
-            if (this.filterOption == "Recipe: A to Z") {1
-                //code to sort the recipes A to Z
+        sortByFilter: function() {
+            switch(this.filterOption) {
+                case "1":
+                    this.recipes.sort( (a, b) => {
+                        return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
+                    })
+                    break
+                case "2":
+                    this.recipes.sort( (a, b) => {
+                        return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
+                    })
+                    break
+                case "3":
+                    this.recipes.sort( (a, b) => {
+                        return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
+                    })
+                    break
+                case "4":
+                    this.recipes.sort( (a, b) => {
+                        return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
+                    })
+                    break
             }
-            else if (this.filterOption == "Recipe: Z to A") {
-                //code to sort the recipes A to Z
-            }
-            else if (this.filterOption == "Calorie: High to Low") {
-                //code to sort the Calorie: High to Low
-                this.recipes.reverse()
-            }
-            else if (this.filterOption == "Calorie: Low to High") {
-                //code to sort the Calorie: Low to High
-                this.recipes.reverse()
-            }
-
         },
 
         ingredientInputUpdate: function() {
@@ -105,16 +111,18 @@ const app = new Vue({
 
     mounted: function() {
         socket.on('recipesResult', (data) => {
-            this.recipes = data.map( recipe => {
+            this.recipes = data.map( r => {
                 this.reci_id_gen++
                 return {
                     id: this.reci_id_gen,
-                    title: recipe.name,
-                    url: recipe.url,
-                    image: recipe.image,
-                    description: recipe.description
+                    name: r.name,
+                    url: r.url,
+                    image: r.image,
+                    description: r.description,
+                    calories: r.calories,
                 }
             })
+            this.sortByFilter()
         })
 
         socket.on('possibleIngredientsResult', (allIngredients) => {
@@ -122,3 +130,17 @@ const app = new Vue({
         })
     },
 })
+
+// comparator to sort by property
+function compareNames(a, b) {
+    const nameA = a.name.toUpperCase()
+    const nameB = b.name.toUpperCase()
+    let comparision = 0
+    if (nameA > nameB){
+        comparison = 1
+    }
+    else if (nameA < nameB) {
+        comparison = -1
+    }
+    return comparison
+}

@@ -16,7 +16,7 @@ class Server {
     }
 
     sendPossibleIngredients(id) {
-        this.pool.query(this.allIngredients(), (err, result) => {
+        this.pool.query(this.queryAllIngredients(), (err, result) => {
             if (err) throw err
             let ingredients = []
             for (const i of result) {
@@ -40,7 +40,7 @@ class Server {
     
         let rawRecipeRows = []
         this.async.forEachOf(ingredients, (ingr, i, inner_callback) => {
-            this.pool.query(this.mappingQuery(ingr), (err, result) => {
+            this.pool.query(this.queryRecipesFromIngredient(ingr), (err, result) => {
                 if (!err && result.length) {
                     rawRecipeRows.push(result[0].recipe)
                     inner_callback(null)
@@ -77,14 +77,15 @@ class Server {
     
         let recipeDetails = []
         this.async.forEachOf(recipes, (name, i, inner_callback) => {
-            this.pool.query(this.detailsFromRecipe(name), (err, result) => {
+            this.pool.query(this.queryDetailsFromRecipe(name), (err, result) => {
                 if (!err && result.length) {
                     const r = result[0]
                     recipeDetails.push({
                         name: r.recipeName,
                         url: r.recipeUrl,
                         image: r.imageUrl,
-                        description: r.description
+                        description: r.description,
+                        calories: r.calories,
                     })
                     inner_callback(null)
                 }
@@ -105,15 +106,15 @@ class Server {
 
     // Queries
 
-    mappingQuery(ingr) {
+    queryRecipesFromIngredient(ingr) {
         return "select recipe from ingredientMapping where ingredient = \"" + ingr + "\""
     }
 
-    detailsFromRecipe(name) {
+    queryDetailsFromRecipe(name) {
         return "select * from recipeUrl where recipeName = \"" + name + "\""
     }
 
-    allIngredients() {
+    queryAllIngredients() {
         return "select ingredient from ingredientMapping"
     }
 
