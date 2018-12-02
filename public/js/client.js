@@ -15,7 +15,7 @@ const app = new Vue({
             filterOption: "",
         }
     },
-    
+
     methods: {
         clickRecipe: function(id) {
             let r = this.recipes.find(obj => obj.id == id)
@@ -23,12 +23,21 @@ const app = new Vue({
         },
 
         changedFilter: function() {
-            if (this.filterOption == "A") {1
+            if (this.filterOption == "Recipe: A to Z") {1
+                //code to sort the recipes A to Z
+            }
+            else if (this.filterOption == "Recipe: Z to A") {
+                //code to sort the recipes A to Z
+            }
+            else if (this.filterOption == "Calorie: High to Low") {
+                //code to sort the Calorie: High to Low
                 this.recipes.reverse()
             }
-            else if (this.filterOption == "B") {
+            else if (this.filterOption == "Calorie: Low to High") {
+                //code to sort the Calorie: Low to High
                 this.recipes.reverse()
             }
+
         },
 
         ingredientInputUpdate: function() {
@@ -91,7 +100,7 @@ const app = new Vue({
     },
 
     created: function() {
-        socket = io()   
+        socket = io()
     },
 
     mounted: function() {

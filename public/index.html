@@ -54,12 +54,15 @@
             <div v-if="recipes.length">
               <h1>We found some recipes for you... </h1>
 
-              <select v-model="filterOption" v-on:click="changedFilter">
-                <option disabled value="">Please select one</option>
-                <option>A</option>
-                <option>B</option>
-                <option>C</option>
-              </select>
+              <div class="styled-select blue semi-square">
+                <select  v-model="filterOption" v-on:click="changedFilter">
+                  <option disabled value="">Please select filter</option>
+                  <option>Recipe: A to Z</option>
+                  <option>Recipe: Z to A</option>
+                  <option>Calorie: High to Low</option>
+                  <option>Calorie: Low to High</option>
+                </select>
+              </div>
 
               <div id="recipes-list-flexbox">
                   <recipes-list-item
