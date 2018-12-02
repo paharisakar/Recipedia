@@ -4483,7 +4483,9 @@ American	onion	pork	rice	pepper	mushroom
 American	tomato	vinegar	pork	lemon	celery_oil	corn	cane_molasses	white_wine	garlic
 American	tomato	vinegar	pork	mustard	onion	black_pepper	pepper	garlic
 American	cane_molasses	cherry	soy_sauce	plum	pork
-American	pork	wheat	pepper	lard
+American	pork	wheat	pepper	lard	sour_cream	mustard
+American	salt  	sugar	
+American  	cranberries	blueberries	all_purpose_flour	baking_soda	baking_powder
 American	pork	onion	mushroom	parsley	vegetable_oil	mustard	cream
 American	cane_molasses	pepper	marjoram	apple	thyme	roasted_pork	sage	onion	maple_syrup	rosemary
 American	tomato	vinegar	pepper	mustard	onion	black_pepper	cayenne	garlic
@@ -4498,12 +4500,12 @@ American	cane_molasses	beef	onion	black_pepper	cayenne	buttermilk	garlic	vegetab
 American	cauliflower	mushroom	starch	soy_sauce	orange_juice	ginger	carrot	garlic	olive	rice	broccoli
 American	coriander	fenugreek	pepper	lemon_juice	cheddar_cheese	cumin	vegetable_oil	chicken	rice	egg	broccoli	turmeric
 American	vinegar	potato	bacon	white_wine	celery	scallion
-American	pepper	beef	potato	tabasco_pepper	bean	frankfurter
+American	pepper	beef	potato	tabasco_pepper	bean	frankfurter	strawberries	raspberries	chocolate	chocolate_chips
 American	wheat	nutmeg	milk	egg	banana
-American	onion	bacon	crab	vegetable_oil	egg	pea
+American	onion	bacon	crab	vegetable_oil	egg	pea	salt	paprika
 American	wheat	vanilla	milk_fat	nutmeg	egg	milk	cream
 American	butter	potato_chip	cheddar_cheese	potato	cream
-American	orange	cherry	lime	lemon	pineapple
+American	orange	cherry	lime	lemon	pineapple	mayonnaise
 American	butter	green_bell_pepper	onion	mushroom	bacon	black_pepper	thyme	sage	celery	marjoram	garlic	bell_pepper	basil	white_bread	rosemary	pork_sausage
 American	butter	wheat	vanilla	cocoa	buttermilk	pecan	cinnamon	egg
 American	butter	tomato	onion	cheese	white_wine	swiss_cheese	garlic
@@ -4709,10 +4711,10 @@ American	vinegar	pepper	onion	tabasco_pepper	parsley	scallion	garlic	vegetable_o
 American	butter	kiwi	wheat	vanilla	cocoa	strawberry	fruit	cream_cheese	egg	milk	cream
 American	butter	wheat	peach	vanilla	gelatin	raspberry	egg	milk	cream
 American	butter	coconut	lemon	vanilla	gelatin	wheat	egg	milk	cream
-American	butter	kiwi	wheat	yeast	blueberry	strawberry	cream_cheese	lemon	egg	milk	cream
+American	butter	kiwi	wheat	yeast	blueberry	strawberry	cream_cheese	lemon	egg	milk	cream	jalapeno	cherries	salsa
 American	honey	cocoa	gelatin	bean	fruit	orange	cream	bread
 American	wheat	cocoa	gelatin	fruit	cream	bread	lime
-American	cherry	vanilla	cream_cheese	egg	milk	bread
+American	cherry	vanilla	cream_cheese	egg	milk	bread	heavy_cream	light_cream
 American	strawberry	gelatin	cream
 American	cream	vanilla	cocoa	raspberry	milk	wine
 American	butter	coffee	wheat	cocoa	strawberry	raspberry	egg	milk	cream

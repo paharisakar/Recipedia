@@ -7,6 +7,7 @@ for f in files:
         norm_ingredients.update(list(line.rstrip('\n').split('\t'))[1:])
 
 norm_ingredients.remove('tea')
+norm_ingredients.remove('eel')
 
 norm_ingredients = [' '.join(item.split('_')) for item in norm_ingredients]
 
@@ -16,7 +17,7 @@ def clean_ingredient_string(receipe):
 
     receipe = receipe.replace('&', '').replace('(', '').replace(')','')
     receipe = receipe.replace('\'', '').replace('\\', '').replace(',','')
-    receipe = receipe.replace('.', '').replace('%', '').replace('/','')
+    receipe = receipe.replace('.', '').replace('%', '').replace('/','').replace('-', ' ')
 
     receipe = ''.join([i for i in receipe if not i.isdigit()])
     # receipe = receipe.split()
@@ -28,10 +29,13 @@ def clean_ingredient_string(receipe):
 
     # print(receipe)
 
-    return list(set([ingredient for ingredient in norm_ingredients if ingredient+' ' in receipe or ' '+ingredient in receipe]))
-    # return list(set([ingredient for ingredient in norm_ingredients if ingredient in receipe]))
+    # return list(set([ingredient for ingredient in norm_ingredients if ingredient+' ' in receipe or ' '+ingredient in receipe]))
+    return list(set([ingredient for ingredient in norm_ingredients if ingredient in receipe]))
 
 
+####################
+# ALL RECIPE Data
+####################
 
 df = pd.read_csv('all_ing.csv', index_col=0)
 normalized = []
@@ -44,4 +48,23 @@ for i in df['Ingredient']:
 df['Normalized'] = normalized
 df = df[['Ingredient', 'Normalized', 'Name of Dish']]
 df.to_csv('all_ing.csv')
+#########################################
+
+
+
+####################
+# Sugar Spice Life Data
+####################
+
+df = pd.read_csv('ingredient.csv', index_col=0)
+normalized = []
+for i in df['Ingredient']:
+    if  not clean_ingredient_string(i): normalized.append('')
+    else: normalized.append(max(clean_ingredient_string(i), key=len))
+
+# Writing to the csv file
+#########################################
+df['Normalized'] = normalized
+df = df[['Ingredient', 'Normalized', 'Name of Dish']]
+df.to_csv('ingredient.csv')
 #########################################
