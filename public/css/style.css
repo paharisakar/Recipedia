@@ -86,8 +86,6 @@
    background: #58B14C url("http://i62.tinypic.com/15xvbd5.png") no-repeat scroll 319px center;
 }
 
-
-
 select#soflow, select#soflow-color {
    -webkit-appearance: button;
    -webkit-border-radius: 2px;
@@ -175,7 +173,6 @@ input:checked + .slider:before {
   transform: translateX(114px);
 }
 
-
 .slider.round {
   border-radius: 34px;
 }
@@ -183,8 +180,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-
 
 .slider:after
 {
@@ -219,71 +214,10 @@ input:checked + .slider:after
     -ms-transition: all 1s ease;
     transition: all 1s ease;
 }
+
 .footer #button:hover{
 	width:35px;
 	height:35px;
-
-  .switch {
-    position: relative;
-    display: inline-block;
-    width: 60px;
-    height: 34px;
-  }
-
-  .switch input {
-    opacity: 0;
-    width: 0;
-    height: 0;
-  }
-
-  .slider {
-    position: absolute;
-    cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 26px;
-    width: 26px;
-    left: 4px;
-    bottom: 4px;
-    background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
-  }
-
-  input:checked + .slider {
-    background-color: #2196F3;
-  }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
-
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-
-  .slider.round:before {
-    border-radius: 50%;
-  }
-
-
 	border: #ffffff 12px solid;
 	-webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
@@ -292,6 +226,7 @@ input:checked + .slider:after
     transition: all 1s ease;
 	position:relative;
 }
+
 .footer {
 	bottom:0;
 	left:0;
@@ -307,6 +242,7 @@ input:checked + .slider:after
     transition: all 1s ease;
 	z-index:999;
 }
+
 .footer:hover {
 	-webkit-transition: all 1s ease;
     -moz-transition: all 1s ease;
@@ -315,6 +251,7 @@ input:checked + .slider:after
     transition: all 1s ease;
 	height: 10em;
 }
+
 .footer #container{
 	margin-top:5px;
 	width:100%;
@@ -324,6 +261,7 @@ input:checked + .slider:after
   left:0;
 	background: #ffffff;
 }
+
 .footer #cont{
   position:relative;
   top:-45px;
@@ -332,11 +270,13 @@ input:checked + .slider:after
 	height:auto;
 	margin:0 auto;
 }
+
 .footer_center{
 	width:500px;
 	float:left;
   text-align:center;
 }
+
 .footer h3{
 	font-family: 'Helvetica';
 	font-size: 30px;
@@ -344,6 +284,7 @@ input:checked + .slider:after
 	margin-top:70px;
 	margin-left:40px;
 }
+
 /*Loading gif*/
 #loading {
   position: fixed;
