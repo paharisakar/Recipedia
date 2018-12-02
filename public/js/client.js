@@ -12,13 +12,32 @@ const app = new Vue({
             ingredients: [],
             recipes: [],
             possibleIngredients: [],
+            filterOption: "",
         }
     },
-    
+
     methods: {
         clickRecipe: function(id) {
             let r = this.recipes.find(obj => obj.id == id)
-            r.showFull = !r.showFull
+            //r.showFull = !r.showFull
+        },
+
+        changedFilter: function() {
+            if (this.filterOption == "Recipe: A to Z") {1
+                //code to sort the recipes A to Z
+            }
+            else if (this.filterOption == "Recipe: Z to A") {
+                //code to sort the recipes A to Z
+            }
+            else if (this.filterOption == "Calorie: High to Low") {
+                //code to sort the Calorie: High to Low
+                this.recipes.reverse()
+            }
+            else if (this.filterOption == "Calorie: Low to High") {
+                //code to sort the Calorie: Low to High
+                this.recipes.reverse()
+            }
+
         },
 
         ingredientInputUpdate: function() {
@@ -36,7 +55,7 @@ const app = new Vue({
         },
 
         fetchRecipes: function() {
-            socket.emit('recipesRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+            socket.emit('recipesFromIngredsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
         },
 
         addSuggestion: function(suggestion) {
@@ -81,27 +100,24 @@ const app = new Vue({
     },
 
     created: function() {
-        socket = io()   
+        socket = io()
     },
 
     mounted: function() {
         socket.on('recipesResult', (data) => {
             this.recipes = data.map( recipe => {
-                const look_after = 25
-                const next_space = recipe.details.substr(look_after).indexOf(' ') 
-                const next_break = recipe.details.substr(look_after).indexOf('<br>')
-                const snippet_end = Math.min(next_space, next_break) + look_after
                 this.reci_id_gen++
                 return {
                     id: this.reci_id_gen,
-                    title: recipe.dish,
-                    body: recipe.details,
-                    snippet: recipe.details.slice(0, snippet_end) + '...',
-                    showFull: false
+                    title: recipe.name,
+                    url: recipe.url,
+                    image: recipe.image,
+                    description: recipe.description
                 }
             })
         })
-        socket.on('allIngredientsResult', (allIngredients) => {
+
+        socket.on('possibleIngredientsResult', (allIngredients) => {
             this.possibleIngredients = allIngredients
         })
     },
