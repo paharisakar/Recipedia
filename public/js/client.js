@@ -83,25 +83,27 @@ const app = new Vue({
             const input = document.getElementById('ingredient-input')
             if (input.value !== '') {
                 input.value = ""
-                const ingr = this.suggestions[0]
+                if (this.suggestions.length) {
+                    const ingr = this.suggestions[0]
 
-                let found = false
-                for (let i = 0; i < this.ingredients.length; i++) {
-                    if (this.ingredients[i].label == ingr) {
-                        found = true
-                        break
+                    let found = false
+                    for (let i = 0; i < this.ingredients.length; i++) {
+                        if (this.ingredients[i].label == ingr) {
+                            found = true
+                            break
+                        }
                     }
-                }
-
-                if (!found) {
-                    this.ingr_id_gen++
-                    this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
-
-                    if (!this.showRecipes) {
-                        this.showRecipes = true
+    
+                    if (!found) {
+                        this.ingr_id_gen++
+                        this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
+    
+                        if (!this.showRecipes) {
+                            this.showRecipes = true
+                        }
+    
+                        this.fetchRecipes()
                     }
-
-                    this.fetchRecipes()
                 }
             }
         },
