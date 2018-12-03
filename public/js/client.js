@@ -67,25 +67,42 @@ const app = new Vue({
         addSuggestion: function(suggestion) {
             this.suggestions = []
             const input = document.getElementById('ingredient-input')
+            input.value = ""
+
             this.ingr_id_gen++
             this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
-            input.value = ""
+
             if (!this.showRecipes) {
                 this.showRecipes = true
             }
+
             this.fetchRecipes()
         },
 
-        addIngredient: function() {
+        submitInput: function() {
             const input = document.getElementById('ingredient-input')
             if (input.value !== '') {
-                this.ingr_id_gen++
-                this.ingredients.push( { id: this.ingr_id_gen, label: input.value } )
                 input.value = ""
-                if (!this.showRecipes) {
-                    this.showRecipes = true
+                const ingr = this.suggestions[0]
+
+                let found = false
+                for (let i = 0; i < this.ingredients.length; i++) {
+                    if (this.ingredients[i].label == ingr) {
+                        found = true
+                        break
+                    }
                 }
-                this.fetchRecipes()
+
+                if (!found) {
+                    this.ingr_id_gen++
+                    this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
+
+                    if (!this.showRecipes) {
+                        this.showRecipes = true
+                    }
+
+                    this.fetchRecipes()
+                }
             }
         },
 
