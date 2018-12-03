@@ -52,7 +52,12 @@
           </div>
           <div class="recipes" v-if="showRecipes">
             <div v-if="recipes.length">
-              <h1>We found some recipes for you... </h1>
+              <div v-if="recipes.length == 1">
+                <h1>We found 1 recipe for you... </h1>
+              </div>
+              <div v-else>
+                <h1>We found {{ recipes.length }} recipes for you... </h1>
+              </div>
 
               <div class="styled-select blue semi-square">
                 <select v-model="filterOption" @change="sortByFilter">
@@ -64,12 +69,12 @@
               </div>
 
               <div id="recipes-list-flexbox">
-                  <recipes-list-item
-                    v-for="recipe in recipes"
-                    v-bind:recipe="recipe"
-                    v-on:click-recipe="clickRecipe"
-                  ></recipes-list-item>
-                </div>
+                <recipes-list-item
+                  v-for="recipe in recipes"
+                  v-bind:recipe="recipe"
+                  v-on:click-recipe="clickRecipe"
+                ></recipes-list-item>
+              </div>
             </div>
             <div v-else>
               <h1>No recipes found...</h1>
