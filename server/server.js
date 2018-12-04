@@ -7,11 +7,11 @@ class Server {
     }
 
     init() {
-
         this.io.on('connection', (socket) => {
             console.log('> A client connected')
             this.sendPossibleIngredients(socket.id)
-            socket.on('recipesFromIngredsRequest', (msg) => this.sendRecipes(msg))
+            socket.on('recipesFromIngredientsRequest', (msg) => this.sendRecipesFromIngredients(msg))
+            socket.on('recipesFromPhraseRequest', (msg) => this.sendRecipesFromPhrase(msg))
         })
     }
 
@@ -26,16 +26,58 @@ class Server {
         })
     }
 
-    sendRecipes(msg) {
+    sendRecipesFromIngredients(msg) {
         const { id, ingredients } = msg
-        this.findRecipes(ingredients, (deets) => {
-            this.io.to(id).emit('recipesResult', deets)
+        console.log("")
+        console.log("=> ingredient search by " + id)
+        this.findRecipesFromIngredients(ingredients, (recipeData) => {
+            console.log('Emitting ' + recipeData.length + ' recipes')
+            this.io.to(id).emit('recipesResult', recipeData)
         })
     }
     
-    findRecipes(ingredients, emitDeets) {
-        console.log('---')
-        console.log('Searched with: ')
+    sendRecipesFromPhrase(msg) {
+        const { id, phrase } = msg
+        console.log("")
+        console.log("=> recipe search by " + id)
+        this.findRecipesFromPhrase(phrase, (recipeData) => {
+            console.log('Emitting ' + recipeData.length + ' recipes')
+            this.io.to(id).emit('recipesResult', recipeData)
+        })
+    }
+
+    findRecipesFromPhrase(phrase, emitRecipeData) {
+        console.log('Searched with phrase: ' + phrase)
+
+        this.pool.query(this.queryRecipesLikePhrase(phrase), (err, result) => {
+            if (!err) {
+                let recipeDetails = []
+                if (result.length) {
+                    for (let r of result) {
+                        recipeDetails.push({
+                            name: r.recipeName,
+                            url: r.recipeUrl,
+                            image: r.imageUrl,
+                            description: r.description,
+                            calories: r.calories,
+                        })
+                    }
+                }
+                else {
+                    console.log("No recipes with phrase '" + phrase + "' found")
+                }
+
+                emitRecipeData(recipeDetails)
+            }
+            else {
+                console.log('Error during query in recipeUrl table')
+            }
+        })
+
+    }
+    
+    findRecipesFromIngredients(ingredients, emitRecipeData) {
+        console.log('Searched with ingredients: ')
         console.log(ingredients)
     
         let rawRecipeRows = []
@@ -57,12 +99,12 @@ class Server {
                 for (let r of rawRecipeRows) {
                     recipesLists.push(r.split(';'))
                 }
-                console.log(recipesLists)
+
                 if (recipesLists.includes(['NO_RESULT'])) {
-                    this.getRecipeDetails([], emitDeets)
+                    this.getRecipeDetails([], emitRecipeData)
                 }
                 else {
-                    this.getRecipeDetails(this.intersectOfLists(recipesLists), emitDeets)
+                    this.getRecipeDetails(this.intersectOfLists(recipesLists), emitRecipeData)
                 }
             }
             else {
@@ -71,7 +113,7 @@ class Server {
         })
     }
     
-    getRecipeDetails(recipes, emitDeets) {
+    getRecipeDetails(recipes, emitRecipeData) {
         console.log('Matches:')
         console.log(recipes)
     
@@ -96,7 +138,7 @@ class Server {
             })
         }, (err) => {
             if (!err) {
-                emitDeets(recipeDetails)
+                emitRecipeData(recipeDetails)
             }
             else {
                 console.log('Error getting recipe details')
@@ -116,6 +158,10 @@ class Server {
 
     queryAllIngredients() {
         return "select ingredient from ingredientMapping"
+    }
+
+    queryRecipesLikePhrase(phrase) {
+        return "select * from recipeUrl where recipeName like '%" + phrase + "%'"
     }
 
     // Utility functions

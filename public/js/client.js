@@ -13,79 +13,69 @@ const app = new Vue({
             recipes: [],
             possibleIngredients: [],
             filterOption: "1",
+            searchType: "1",
         }
     },
-
+    
     methods: {
-        clickRecipe: function(id) {
-            let r = this.recipes.find(obj => obj.id == id)
-        },
-
         sortByFilter: function() {
             switch(this.filterOption) {
                 case "1":
-                    this.recipes.sort( (a, b) => {
-                        return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
-                    })
+                this.recipes.sort( (a, b) => {
+                    return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
+                })
+                break
+                case "2":
+                this.recipes.sort( (a, b) => {
+                    return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
+                })
+                break
+                case "3":
+                this.recipes.sort( (a, b) => {
+                    return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
+                })
+                break
+                case "4":
+                this.recipes.sort( (a, b) => {
+                    return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
+                })
+                break
+            }
+        },
+        
+        submitInput: function() {
+            switch(this.searchType) {
+                case "1":
+                    this.addIngredient()
                     break
                 case "2":
-                    this.recipes.sort( (a, b) => {
-                        return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
-                    })
-                    break
-                case "3":
-                    this.recipes.sort( (a, b) => {
-                        return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
-                    })
-                    break
-                case "4":
-                    this.recipes.sort( (a, b) => {
-                        return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
-                    })
+                    this.searchByPhrase()
                     break
             }
         },
-
-        ingredientInputUpdate: function() {
+        
+        searchByPhrase: function() {
             const input = document.getElementById('ingredient-input')
-            if (input.value.length > 0 ) {
-                let results = fuzzy.filter(input.value, this.possibleIngredients)
-                if (results.length > 5) {
-                    results = results.slice(0, 5)
-                }
-                this.suggestions = results.map(el => el.string)
+            const phrase = input.value
+            
+            if (phrase !== '') {
+                this.showRecipes = true
+                socket.emit('recipesFromPhraseRequest', { id: socket.id, phrase: phrase })
             }
             else {
-                this.suggestions = []
+                this.recipes = []
+                this.showRecipes = false
             }
         },
-
-        fetchRecipes: function() {
-            socket.emit('recipesFromIngredsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
-        },
-
-        addSuggestion: function(suggestion) {
-            this.suggestions = []
+        
+        addIngredient: function() {
             const input = document.getElementById('ingredient-input')
-            input.value = ""
-
-            this.ingr_id_gen++
-            this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
-
-            if (!this.showRecipes) {
-                this.showRecipes = true
-            }
-
-            this.fetchRecipes()
-        },
-
-        submitInput: function() {
-            const input = document.getElementById('ingredient-input')
+            
             if (input.value !== '') {
                 input.value = ""
                 if (this.suggestions.length) {
                     const ingr = this.suggestions[0]
-
+                    
                     let found = false
                     for (let i = 0; i < this.ingredients.length; i++) {
                         if (this.ingredients[i].label == ingr) {
@@ -93,21 +83,18 @@ const app = new Vue({
                             break
                         }
                     }
-    
+                    
                     if (!found) {
                         this.ingr_id_gen++
                         this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
-    
-                        if (!this.showRecipes) {
-                            this.showRecipes = true
-                        }
-    
-                        this.fetchRecipes()
+                        
+                        this.showRecipes = true
+                        socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
                     }
                 }
             }
         },
-
+        
         deleteIngredient: function(id) {
             let index = this.ingredients.findIndex( function(item) {
                 return item.id == id
@@ -118,16 +105,49 @@ const app = new Vue({
                     this.showRecipes = false
                 }
                 else {
-                    this.fetchRecipes()
+                    this.showRecipes = true
+                    socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
                 }
             }
         },
-    },
+        
+        addSuggestion: function(suggestion) {
+            this.suggestions = []
+            const input = document.getElementById('ingredient-input')
+            input.value = ""
+            
+            this.ingr_id_gen++
+            this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
+            
+            this.showRecipes = true
+            socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+        },
+        
+        ingredientInputUpdate: function() {
+            if (this.searchType == "1") {
+                const input = document.getElementById('ingredient-input')
+                if (input.value.length > 0 ) {
+                    let results = fuzzy.filter(input.value, this.possibleIngredients)
+                    if (results.length > 5) {
+                        results = results.slice(0, 5)
+                    }
+                    this.suggestions = results.map(el => el.string)
+                }
+                else {
+                    this.suggestions = []
+                }
+            }
+        },
 
+        clickRecipe: function(id) {
+            let r = this.recipes.find(obj => obj.id == id)
+        },
+    },
+    
     created: function() {
         socket = io()
     },
-
+    
     mounted: function() {
         socket.on('recipesResult', (data) => {
             this.recipes = data.map( r => {
