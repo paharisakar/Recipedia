@@ -18,6 +18,33 @@ const app = new Vue({
     },
     
     methods: {
+            /* myFunction is directly involved with changing between recipes and ingredients
+    x is the object for the label
+    y is the object for the button
+    the toggle labels get handled in the css file*/
+    myFunction: function() {
+        var x = document.getElementsByName('labelBox')[0];
+        var y = document.getElementsByName('recIngButton')[0];
+        if (x.placeholder === "Enter your ingredients") {
+            x.value = "";
+            x.placeholder='Search for recipes';
+            y.innerHTML = " Search ";
+            this.ingredients = [];
+            this.recipes = [];
+            this.suggestions = []
+            this.showRecipes = false;
+            this.searchType = "2";
+        } else {
+            x.value = "";
+            x.placeholder = "Enter your ingredients";
+            y.innerHTML = "Add";
+            this.ingredients = [];
+            this.recipes = [];
+            this.suggestions = []
+            this.showRecipes = false;
+            this.searchType = "1";
+        }
+    },
         sortByFilter: function() {
             switch(this.filterOption) {
                 case "1":
@@ -70,7 +97,7 @@ const app = new Vue({
         
         addIngredient: function() {
             const input = document.getElementById('ingredient-input')
-            
+            this.suggestions = []
             if (input.value !== '') {
                 input.value = ""
                 if (this.suggestions.length) {
@@ -143,7 +170,6 @@ const app = new Vue({
             let r = this.recipes.find(obj => obj.id == id)
         },
     },
-    
     created: function() {
         socket = io()
     },
