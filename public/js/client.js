@@ -37,7 +37,7 @@ const app = new Vue({
                 submitButton.innerHTML = "Add"
             }
             else {
-                inputBar.placeholder="Search for recipes"
+                inputBar.placeholder = "Search for recipes"
                 submitButton.innerHTML = "Search"
                 this.ingredients = []
                 this.suggestions = []
@@ -164,10 +164,6 @@ const app = new Vue({
                     this.suggestions = []
                 }
             }
-        },
-
-        clickRecipe: function(id) {
-            let r = this.recipes.find(obj => obj.id == id)
         },
     },
     created: function() {
