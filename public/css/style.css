@@ -141,7 +141,7 @@ select#soflow-color {
   left: 80;
   right: 0;
   bottom: 0;
-  width: 150px;
+  width: 125px;
   background-color: #1a6c92;
   -webkit-transition: .4s;
   transition: .4s;
@@ -168,9 +168,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider:before {
-  -webkit-transform: translateX(114px);
-  -ms-transform: translateX(114px);
-  transform: translateX(114px);
+  -webkit-transform: translateX(90px);
+  -ms-transform: translateX(90px);
+  transform: translateX(90px);
 }
 
 .slider.round {
@@ -181,9 +181,11 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
+/* Label for the toggle, 
+recipes*/
 .slider:after
 {
- content:'Recipes';
+ content:'Ingredients';
  color: white;
  display: block;
  position: absolute;
@@ -194,10 +196,11 @@ input:checked + .slider:before {
  font-family: Verdana, sans-serif;
 
 }
-
+/* Label for the toggle, 
+ingredients*/
 input:checked + .slider:after
 {
-  content:'Ingredients';
+  content:'Recipes';
 }
 
 /*Footer*/
@@ -402,6 +405,7 @@ input:checked + .slider:after
 #ingredient-input-container {
   overflow: hidden;
   padding-right: 1.5em;
+
 }
 
 #ingredient-add-button {
@@ -414,7 +418,9 @@ input:checked + .slider:after
   text-decoration: none;
   font: 14px Raleway;
   color: #ffffff;
+  width: 48px;
   padding: 10px;
+  text-align: center;
   margin-right: 8px;
   margin-bottom: 8px;
 }
