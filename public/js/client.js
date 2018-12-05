@@ -14,10 +14,23 @@ const app = new Vue({
             possibleIngredients: [],
             filterOption: "1",
             inputType: "ingredients",
+            recipesContainerTitle: "-",
         }
     },
     
     methods: {
+        updateRecipesContainerTitle: function() {
+            if (this.recipes.length == 0) {
+                this.recipesContainerTitle = "No recipes found..."
+            }
+            else if (this.recipes.length == 1) {
+                this.recipesContainerTitle = "We found 1 recipe for you..."
+            }
+            else {
+                this.recipesContainerTitle = "We found " + this.recipes.length + " recipes for you..."
+            }
+        },
+
      /* toggleInputType is directly involved with changing between recipes and ingredients
         inputBar is the object for the label
         submitButton is the object for the button
@@ -70,22 +83,26 @@ const app = new Vue({
         },
         
         submitInput: function() {
-            switch(this.inputType) {
-                case "ingredients":
-                    this.addIngredient()
-                    break
-                case "recipes":
-                    this.searchByPhrase()
-                    break
+            const input = document.getElementById('input-bar')
+
+            if (input.value !== '') {
+                switch(this.inputType) {
+                    case "ingredients":
+                        this.addIngredient()
+                        break
+                    case "recipes":
+                        this.searchByPhrase()
+                        break
+                }
             }
         },
         
         searchByPhrase: function() {
             const input = document.getElementById('input-bar')
             const phrase = input.value
-            
             if (phrase !== '') {
                 this.showRecipes = true
+                this.recipesContainerTitle = "Searching..."
                 socket.emit('recipesFromPhraseRequest', { id: socket.id, phrase: phrase })
             }
             else {
@@ -96,27 +113,27 @@ const app = new Vue({
         
         addIngredient: function() {
             const input = document.getElementById('input-bar')
-            if (input.value !== '') {
-                input.value = ""
-                if (this.suggestions.length) {
-                    const ingr = this.suggestions[0]
-                    this.suggestions = []
-                    
-                    let found = false
-                    for (let i = 0; i < this.ingredients.length; i++) {
-                        if (this.ingredients[i].label == ingr) {
-                            found = true
-                            break
-                        }
+            input.value = ""
+
+            if (this.suggestions.length) {
+                const ingr = this.suggestions[0]
+                this.suggestions = []
+                
+                let found = false
+                for (let i = 0; i < this.ingredients.length; i++) {
+                    if (this.ingredients[i].label == ingr) {
+                        found = true
+                        break
                     }
+                }
+                
+                if (!found) {
+                    this.ingr_id_gen++
+                    this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
                     
-                    if (!found) {
-                        this.ingr_id_gen++
-                        this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
-                        
-                        this.showRecipes = true
-                        socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
-                    }
+                    this.showRecipes = true
+                    this.recipesContainerTitle = "Searching..."
+                    socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
                 }
             }
         },
@@ -132,6 +149,7 @@ const app = new Vue({
                 }
                 else {
                     this.showRecipes = true
+                    this.recipesContainerTitle = "Searching..."
                     socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
                 }
             }
@@ -146,12 +164,12 @@ const app = new Vue({
             this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
             
             this.showRecipes = true
+            this.recipesContainerTitle = "Searching..."
             socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
         },
         
         inputUpdate: function() {
             if (this.inputType == "ingredients") {
-                console.log('awye')
                 const input = document.getElementById('input-bar')
                 if (input.value.length > 0 ) {
                     let results = fuzzy.filter(input.value, this.possibleIngredients)
@@ -184,6 +202,7 @@ const app = new Vue({
                 }
             })
             this.sortByFilter()
+            this.updateRecipesContainerTitle()
         })
 
         socket.on('possibleIngredientsResult', (allIngredients) => {

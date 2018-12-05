@@ -58,32 +58,24 @@
       </div>
 
       <div id="recipes-container" v-if="showRecipes">
+        <h1>{{ recipesContainerTitle }}</h1>
+
         <div v-if="recipes.length">
-          <div v-if="recipes.length == 1">
-            <h1>We found 1 recipe for you... </h1>
-          </div>
-          <div v-else>
-            <h1>We found {{ recipes.length }} recipes for you... </h1>
-          </div>
-
           <div class="styled-select blue semi-square">
-            <select v-model="filterOption" @change="sortByFilter">
-              <option value="1" selected="selected">Recipe: A to Z</option>
-              <option value="2">Recipe: Z to A</option>
-              <option value="3">Calories: High to Low</option>
-              <option value="4">Calories: Low to High</option>
-            </select>
-          </div>
-
-          <div id="recipes-list-flexbox">
-            <recipes-list-item
-              v-for="recipe in recipes"
-              v-bind:recipe="recipe"
-            ></recipes-list-item>
-          </div>
-        </div>
-        <div v-else>
-          <h1>No recipes found...</h1>
+              <select v-model="filterOption" @change="sortByFilter">
+                <option value="1" selected="selected">Recipe: A to Z</option>
+                <option value="2">Recipe: Z to A</option>
+                <option value="3">Calories: High to Low</option>
+                <option value="4">Calories: Low to High</option>
+              </select>
+            </div>
+    
+            <div id="recipes-list-flexbox">
+              <recipes-list-item
+                v-for="recipe in recipes"
+                v-bind:recipe="recipe"
+              ></recipes-list-item>
+            </div>
         </div>
       </div>
     </div>
