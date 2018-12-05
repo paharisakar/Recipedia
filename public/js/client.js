@@ -12,77 +12,116 @@ const app = new Vue({
             ingredients: [],
             recipes: [],
             possibleIngredients: [],
-            filterOption: "",
+            filterOption: "1",
+            searchType: "1",
         }
     },
-
+    
     methods: {
-        clickRecipe: function(id) {
-            let r = this.recipes.find(obj => obj.id == id)
-            //r.showFull = !r.showFull
+            /* myFunction is directly involved with changing between recipes and ingredients
+    x is the object for the label
+    y is the object for the button
+    the toggle labels get handled in the css file*/
+    myFunction: function() {
+        var x = document.getElementsByName('labelBox')[0];
+        var y = document.getElementsByName('recIngButton')[0];
+        if (x.placeholder === "Enter your ingredients") {
+            x.value = "";
+            x.placeholder='Search for recipes';
+            y.innerHTML = " Search ";
+            this.ingredients = [];
+            this.recipes = [];
+            this.suggestions = []
+            this.showRecipes = false;
+            this.searchType = "2";
+        } else {
+            x.value = "";
+            x.placeholder = "Enter your ingredients";
+            y.innerHTML = "Add";
+            this.ingredients = [];
+            this.recipes = [];
+            this.suggestions = []
+            this.showRecipes = false;
+            this.searchType = "1";
+        }
+    },
+        sortByFilter: function() {
+            switch(this.filterOption) {
+                case "1":
+                this.recipes.sort( (a, b) => {
+                    return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
+                })
+                break
+                case "2":
+                this.recipes.sort( (a, b) => {
+                    return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
+                })
+                break
+                case "3":
+                this.recipes.sort( (a, b) => {
+                    return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
+                })
+                break
+                case "4":
+                this.recipes.sort( (a, b) => {
+                    return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
+                })
+                break
+            }
         },
-
-        changedFilter: function() {
-            if (this.filterOption == "Recipe: A to Z") {1
-                //code to sort the recipes A to Z
+        
+        submitInput: function() {
+            switch(this.searchType) {
+                case "1":
+                    this.addIngredient()
+                    break
+                case "2":
+                    this.searchByPhrase()
+                    break
             }
-            else if (this.filterOption == "Recipe: Z to A") {
-                //code to sort the recipes A to Z
-            }
-            else if (this.filterOption == "Calorie: High to Low") {
-                //code to sort the Calorie: High to Low
-                this.recipes.reverse()
-            }
-            else if (this.filterOption == "Calorie: Low to High") {
-                //code to sort the Calorie: Low to High
-                this.recipes.reverse()
-            }
-
         },
-
-        ingredientInputUpdate: function() {
+        
+        searchByPhrase: function() {
             const input = document.getElementById('ingredient-input')
-            if (input.value.length > 0 ) {
-                let results = fuzzy.filter(input.value, this.possibleIngredients)
-                if (results.length > 5) {
-                    results = results.slice(0, 5)
-                }
-                this.suggestions = results.map(el => el.string)
+            const phrase = input.value
+            
+            if (phrase !== '') {
+                this.showRecipes = true
+                socket.emit('recipesFromPhraseRequest', { id: socket.id, phrase: phrase })
             }
             else {
-                this.suggestions = []
+                this.recipes = []
+                this.showRecipes = false
             }
         },
-
-        fetchRecipes: function() {
-            socket.emit('recipesFromIngredsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
-        },
-
-        addSuggestion: function(suggestion) {
-            this.suggestions = []
-            const input = document.getElementById('ingredient-input')
-            this.ingr_id_gen++
-            this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
-            input.value = ""
-            if (!this.showRecipes) {
-                this.showRecipes = true
-            }
-            this.fetchRecipes()
-        },
-
+        
         addIngredient: function() {
             const input = document.getElementById('ingredient-input')
+            this.suggestions = []
             if (input.value !== '') {
-                this.ingr_id_gen++
-                this.ingredients.push( { id: this.ingr_id_gen, label: input.value } )
                 input.value = ""
-                if (!this.showRecipes) {
-                    this.showRecipes = true
+                if (this.suggestions.length) {
+                    const ingr = this.suggestions[0]
+                    
+                    let found = false
+                    for (let i = 0; i < this.ingredients.length; i++) {
+                        if (this.ingredients[i].label == ingr) {
+                            found = true
+                            break
+                        }
+                    }
+                    
+                    if (!found) {
+                        this.ingr_id_gen++
+                        this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
+                        
+                        this.showRecipes = true
+                        socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+                    }
                 }
-                this.fetchRecipes()
             }
         },
-
+        
         deleteIngredient: function(id) {
             let index = this.ingredients.findIndex( function(item) {
                 return item.id == id
@@ -93,28 +132,62 @@ const app = new Vue({
                     this.showRecipes = false
                 }
                 else {
-                    this.fetchRecipes()
+                    this.showRecipes = true
+                    socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
                 }
             }
         },
-    },
+        
+        addSuggestion: function(suggestion) {
+            this.suggestions = []
+            const input = document.getElementById('ingredient-input')
+            input.value = ""
+            
+            this.ingr_id_gen++
+            this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
+            
+            this.showRecipes = true
+            socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+        },
+        
+        ingredientInputUpdate: function() {
+            if (this.searchType == "1") {
+                const input = document.getElementById('ingredient-input')
+                if (input.value.length > 0 ) {
+                    let results = fuzzy.filter(input.value, this.possibleIngredients)
+                    if (results.length > 5) {
+                        results = results.slice(0, 5)
+                    }
+                    this.suggestions = results.map(el => el.string)
+                }
+                else {
+                    this.suggestions = []
+                }
+            }
+        },
 
+        clickRecipe: function(id) {
+            let r = this.recipes.find(obj => obj.id == id)
+        },
+    },
     created: function() {
         socket = io()
     },
-
+    
     mounted: function() {
         socket.on('recipesResult', (data) => {
-            this.recipes = data.map( recipe => {
+            this.recipes = data.map( r => {
                 this.reci_id_gen++
                 return {
                     id: this.reci_id_gen,
-                    title: recipe.name,
-                    url: recipe.url,
-                    image: recipe.image,
-                    description: recipe.description
+                    name: r.name,
+                    url: r.url,
+                    image: r.image,
+                    description: r.description,
+                    calories: r.calories,
                 }
             })
+            this.sortByFilter()
         })
 
         socket.on('possibleIngredientsResult', (allIngredients) => {
@@ -122,3 +195,17 @@ const app = new Vue({
         })
     },
 })
+
+// comparator to sort by property
+function compareNames(a, b) {
+    const nameA = a.name.toUpperCase()
+    const nameB = b.name.toUpperCase()
+    let comparision = 0
+    if (nameA > nameB){
+        comparison = 1
+    }
+    else if (nameA < nameB) {
+        comparison = -1
+    }
+    return comparison
+}
