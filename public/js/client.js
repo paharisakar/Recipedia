@@ -14,7 +14,7 @@ const app = new Vue({
             possibleIngredients: [],
             filterOption: "1",
             inputType: "ingredients",
-            recipesContainerTitle: "-",
+            recipesContainerTitle: "",
         }
     },
     
@@ -60,25 +60,25 @@ const app = new Vue({
         sortByFilter: function() {
             switch(this.filterOption) {
                 case "1":
-                this.recipes.sort( (a, b) => {
-                    return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
-                })
-                break
+                    this.recipes.sort( (a, b) => {
+                        return (a.name.toUpperCase() > b.name.toUpperCase()) ? 1 : -1
+                    })
+                    break
                 case "2":
-                this.recipes.sort( (a, b) => {
-                    return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
-                })
-                break
+                    this.recipes.sort( (a, b) => {
+                        return (a.name.toUpperCase() < b.name.toUpperCase()) ? 1 : -1
+                    })
+                    break
                 case "3":
-                this.recipes.sort( (a, b) => {
-                    return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
-                })
-                break
+                    this.recipes.sort( (a, b) => {
+                        return (parseInt(a.calories) < parseInt(b.calories)) ? 1 : -1
+                    })
+                    break
                 case "4":
-                this.recipes.sort( (a, b) => {
-                    return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
-                })
-                break
+                    this.recipes.sort( (a, b) => {
+                        return (parseInt(a.calories) > parseInt(b.calories)) ? 1 : -1
+                    })
+                    break
             }
         },
         
@@ -130,10 +130,7 @@ const app = new Vue({
                 if (!found) {
                     this.ingr_id_gen++
                     this.ingredients.push( { id: this.ingr_id_gen, label: ingr } )
-                    
-                    this.showRecipes = true
-                    this.recipesContainerTitle = "Searching..."
-                    socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+                    this.requestQueryWithIngredients()
                 }
             }
         },
@@ -146,11 +143,10 @@ const app = new Vue({
                 this.ingredients.splice(index, 1)
                 if (this.ingredients.length == 0) {
                     this.showRecipes = false
+                    this.recipes = []
                 }
                 else {
-                    this.showRecipes = true
-                    this.recipesContainerTitle = "Searching..."
-                    socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+                    this.requestQueryWithIngredients()
                 }
             }
         },
@@ -162,12 +158,18 @@ const app = new Vue({
             
             this.ingr_id_gen++
             this.ingredients.push( { id: this.ingr_id_gen, label: suggestion } )
-            
-            this.showRecipes = true
-            this.recipesContainerTitle = "Searching..."
-            socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
+            this.requestQueryWithIngredients()
         },
         
+        requestQueryWithIngredients: function() {
+            this.showRecipes = true
+            this.recipesContainerTitle = "Searching..."
+            socket.emit('recipesFromIngredientsRequest', {
+                id: socket.id,
+                ingredients: this.ingredients.map(el => el.label)
+            })
+        },
+
         inputUpdate: function() {
             if (this.inputType == "ingredients") {
                 const input = document.getElementById('input-bar')
