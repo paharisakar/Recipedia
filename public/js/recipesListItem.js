@@ -5,7 +5,12 @@ Vue.component('recipes-list-item', {
             <a v-bind:href="recipe.url" target="_blank">
                 <img v-bind:src="recipe.image" />
                 <h3>{{ recipe.name }}</h3>
-                <h3>{{ recipe.calories }}</h3>
+                <p v-if="recipe.calories">
+                    {{ recipe.calories }} calories per serving
+                </p>
+                <p v-else>
+                    n/a
+                </p>
             </a>
         </div>
     `

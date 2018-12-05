@@ -519,6 +519,7 @@ input:checked + .slider:after
   flex-direction: row;
   justify-content: flex-start;
   flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .recipes-list-item {
@@ -531,14 +532,14 @@ input:checked + .slider:after
   margin: 10px;
 }
 
+.recipes-list-item a {
+  text-decoration: none;
+}
+
 .recipes-list-item:hover {
   cursor: pointer;
   background-color: #daecf3;
   border-color: #333;
-}
-
-.recipes-list-item a {
-  text-decoration: none;
 }
 
 .recipes-list-item img {
@@ -547,10 +548,20 @@ input:checked + .slider:after
   border-radius: 20px 20px 0px 0px;
 }
 
-.recipes-list-item h3 {
+.recipes-list-item h3,
+.recipes-list-item p {
   font-family: 'Raleway';
-  font-size: 14px;
-  color: #333;
   font-weight: normal;
-  padding: 10px;
+  color: #333;
+  padding: 8px;
+}
+
+.recipes-list-item h3 {
+  font-size: 14px;
+}
+
+.recipes-list-item p {
+  font-size: 12px;
+  text-align: right;
+  padding-top: 0px;
 }
