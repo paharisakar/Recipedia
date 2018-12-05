@@ -25,15 +25,20 @@
         <div id="layout-flexbox">
           <div class="ingredients">
             <h1>Recipedia</h1>
-            <div id="ingredient-add-button" v-on:click="submitInput" title="Click to add ingredient">Add</div>
-            <div id = "ingredient-switch">
+            <div id="ingredient-add-button"name="recIngButton" v-on:click="submitInput" title="Click to add ingredient">Add</div>
+
+
+            <div id = "ingredient-switch" >
             	<label class="switch">
-                <input type="checkbox">
+
+                <input type="checkbox"v-on:click="myFunction">
                 <span class="slider round"></span>
               </label>
             </div>
+
+
             <div id="ingredient-input-container">
-              <input id="ingredient-input" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="submitInput" placeholder="What's in the fridge?">
+              <input id="ingredient-input" name="labelBox" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="submitInput" placeholder="Enter your ingredients">
             </div>
             <div id="suggestions-list-flexbox">
               <suggestions-list-item
