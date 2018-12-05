@@ -19,11 +19,12 @@ const app = new Vue({
     
     methods: {
      /* toggleInputType is directly involved with changing between recipes and ingredients
-        searchBar is the object for the label
+        inputBar is the object for the label
         submitButton is the object for the button
         the toggle labels get handled in the css file */
         toggleInputType: function() {
             this.inputType == "ingredients" ? this.inputType = "recipes" : this.inputType = "ingredients"
+            
             const inputBar = document.getElementById('input-bar')
             const submitButton = document.getElementById('submit-button')
 
@@ -95,12 +96,12 @@ const app = new Vue({
         
         addIngredient: function() {
             const input = document.getElementById('input-bar')
-            this.suggestions = []
             if (input.value !== '') {
                 input.value = ""
                 if (this.suggestions.length) {
                     const ingr = this.suggestions[0]
-
+                    this.suggestions = []
+                    
                     let found = false
                     for (let i = 0; i < this.ingredients.length; i++) {
                         if (this.ingredients[i].label == ingr) {
