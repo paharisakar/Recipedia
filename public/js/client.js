@@ -13,38 +13,36 @@ const app = new Vue({
             recipes: [],
             possibleIngredients: [],
             filterOption: "1",
-            searchType: "1",
+            inputType: "ingredients",
         }
     },
     
     methods: {
-            /* myFunction is directly involved with changing between recipes and ingredients
-    x is the object for the label
-    y is the object for the button
-    the toggle labels get handled in the css file*/
-    myFunction: function() {
-        var x = document.getElementsByName('labelBox')[0];
-        var y = document.getElementsByName('recIngButton')[0];
-        if (x.placeholder === "Enter your ingredients") {
-            x.value = "";
-            x.placeholder='Search for recipes';
-            y.innerHTML = " Search ";
-            this.ingredients = [];
-            this.recipes = [];
-            this.suggestions = []
-            this.showRecipes = false;
-            this.searchType = "2";
-        } else {
-            x.value = "";
-            x.placeholder = "Enter your ingredients";
-            y.innerHTML = "Add";
-            this.ingredients = [];
-            this.recipes = [];
-            this.suggestions = []
-            this.showRecipes = false;
-            this.searchType = "1";
-        }
-    },
+     /* toggleInputType is directly involved with changing between recipes and ingredients
+        searchBar is the object for the label
+        submitButton is the object for the button
+        the toggle labels get handled in the css file */
+        toggleInputType: function() {
+            this.inputType == "ingredients" ? this.inputType = "recipes" : this.inputType = "ingredients"
+            const inputBar = document.getElementById('input-bar')
+            const submitButton = document.getElementById('submit-button')
+
+            inputBar.value = ""
+            this.recipes = []
+            this.showRecipes = false
+
+            if (this.inputType == "ingredients") {
+                inputBar.placeholder = "Enter your ingredients"
+                submitButton.innerHTML = "Add"
+            }
+            else {
+                inputBar.placeholder="Search for recipes"
+                submitButton.innerHTML = "Search"
+                this.ingredients = []
+                this.suggestions = []
+            }
+        },
+
         sortByFilter: function() {
             switch(this.filterOption) {
                 case "1":
@@ -71,18 +69,18 @@ const app = new Vue({
         },
         
         submitInput: function() {
-            switch(this.searchType) {
-                case "1":
+            switch(this.inputType) {
+                case "ingredients":
                     this.addIngredient()
                     break
-                case "2":
+                case "recipes":
                     this.searchByPhrase()
                     break
             }
         },
         
         searchByPhrase: function() {
-            const input = document.getElementById('ingredient-input')
+            const input = document.getElementById('input-bar')
             const phrase = input.value
             
             if (phrase !== '') {
@@ -96,13 +94,13 @@ const app = new Vue({
         },
         
         addIngredient: function() {
-            const input = document.getElementById('ingredient-input')
+            const input = document.getElementById('input-bar')
             this.suggestions = []
             if (input.value !== '') {
                 input.value = ""
                 if (this.suggestions.length) {
                     const ingr = this.suggestions[0]
-                    
+
                     let found = false
                     for (let i = 0; i < this.ingredients.length; i++) {
                         if (this.ingredients[i].label == ingr) {
@@ -140,7 +138,7 @@ const app = new Vue({
         
         addSuggestion: function(suggestion) {
             this.suggestions = []
-            const input = document.getElementById('ingredient-input')
+            const input = document.getElementById('input-bar')
             input.value = ""
             
             this.ingr_id_gen++
@@ -150,9 +148,10 @@ const app = new Vue({
             socket.emit('recipesFromIngredientsRequest', { id: socket.id, ingredients: this.ingredients.map(el => el.label) })
         },
         
-        ingredientInputUpdate: function() {
-            if (this.searchType == "1") {
-                const input = document.getElementById('ingredient-input')
+        inputUpdate: function() {
+            if (this.inputType == "ingredients") {
+                console.log('awye')
+                const input = document.getElementById('input-bar')
                 if (input.value.length > 0 ) {
                     let results = fuzzy.filter(input.value, this.possibleIngredients)
                     if (results.length > 5) {
@@ -195,17 +194,3 @@ const app = new Vue({
         })
     },
 })
-
-// comparator to sort by property
-function compareNames(a, b) {
-    const nameA = a.name.toUpperCase()
-    const nameB = b.name.toUpperCase()
-    let comparision = 0
-    if (nameA > nameB){
-        comparison = 1
-    }
-    else if (nameA < nameB) {
-        comparison = -1
-    }
-    return comparison
-}

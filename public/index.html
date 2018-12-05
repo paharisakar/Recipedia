@@ -17,76 +17,78 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Recipedia</title>
   </head>
+  
   <body onload="load()">
     <div id="loading"></div>
     <div class="overlay"></div>
     <div class="pattern"></div>
-      <div id="app">
-        <div id="layout-flexbox">
-          <div class="ingredients">
-            <h1>Recipedia</h1>
-            <div id="ingredient-add-button"name="recIngButton" v-on:click="submitInput" title="Click to add ingredient">Add</div>
 
+    <div id="app">
+      <div id="ingredients-container">
+        <h1>Recipedia</h1>
 
-            <div id = "ingredient-switch" >
-            	<label class="switch">
+        <div id="submit-button" v-on:click="submitInput">Add</div>
 
-                <input type="checkbox"v-on:click="myFunction">
-                <span class="slider round"></span>
-              </label>
-            </div>
+        <div id="toggle-input-type-switch">
+          <label class="switch">
+            <input type="checkbox" v-on:click="toggleInputType">
+            <span class="slider round"></span>
+          </label>
+        </div>
 
+        <div id="input-bar-container">
+          <input id="input-bar" v-on:keyup="inputUpdate" v-on:keypress.enter="submitInput" placeholder="Enter your ingredients">
+        </div>
 
-            <div id="ingredient-input-container">
-              <input id="ingredient-input" name="labelBox" v-on:keyup="ingredientInputUpdate" v-on:keypress.enter="submitInput" placeholder="Enter your ingredients">
-            </div>
-            <div id="suggestions-list-flexbox">
-              <suggestions-list-item
-                v-for="suggestion in suggestions"
-                v-bind:suggestion="suggestion"
-                v-on:add-suggestion="addSuggestion"
-              ></suggestions-list-item>
-            </div>
-            <div id="ingredients-list-flexbox">
-              <ingredients-list-item
-                v-for="ingredient in ingredients"
-                v-bind:ingredient="ingredient"
-                v-on:delete-ingredient="deleteIngredient"
-              ></ingredients-list-item>
-            </div>
-          </div>
-          <div class="recipes" v-if="showRecipes">
-            <div v-if="recipes.length">
-              <div v-if="recipes.length == 1">
-                <h1>We found 1 recipe for you... </h1>
-              </div>
-              <div v-else>
-                <h1>We found {{ recipes.length }} recipes for you... </h1>
-              </div>
+        <div id="suggestions-list-flexbox">
+          <suggestions-list-item
+            v-for="suggestion in suggestions"
+            v-bind:suggestion="suggestion"
+            v-on:add-suggestion="addSuggestion"
+          ></suggestions-list-item>
+        </div>
 
-              <div class="styled-select blue semi-square">
-                <select v-model="filterOption" @change="sortByFilter">
-                  <option value="1" selected="selected">Recipe: A to Z</option>
-                  <option value="2">Recipe: Z to A</option>
-                  <option value="3">Calorie: High to Low</option>
-                  <option value="4">Calorie: Low to High</option>
-                </select>
-              </div>
-
-              <div id="recipes-list-flexbox">
-                <recipes-list-item
-                  v-for="recipe in recipes"
-                  v-bind:recipe="recipe"
-                  v-on:click-recipe="clickRecipe"
-                ></recipes-list-item>
-              </div>
-            </div>
-            <div v-else>
-              <h1>No recipes found...</h1>
-            </div>
-          </div>
+        <div id="ingredients-list-flexbox">
+          <ingredients-list-item
+            v-for="ingredient in ingredients"
+            v-bind:ingredient="ingredient"
+            v-on:delete-ingredient="deleteIngredient"
+          ></ingredients-list-item>
         </div>
       </div>
+
+      <div id="recipes-container" v-if="showRecipes">
+        <div v-if="recipes.length">
+          <div v-if="recipes.length == 1">
+            <h1>We found 1 recipe for you... </h1>
+          </div>
+          <div v-else>
+            <h1>We found {{ recipes.length }} recipes for you... </h1>
+          </div>
+
+          <div class="styled-select blue semi-square">
+            <select v-model="filterOption" @change="sortByFilter">
+              <option value="1" selected="selected">Recipe: A to Z</option>
+              <option value="2">Recipe: Z to A</option>
+              <option value="3">Calorie: High to Low</option>
+              <option value="4">Calorie: Low to High</option>
+            </select>
+          </div>
+
+          <div id="recipes-list-flexbox">
+            <recipes-list-item
+              v-for="recipe in recipes"
+              v-bind:recipe="recipe"
+              v-on:click-recipe="clickRecipe"
+            ></recipes-list-item>
+          </div>
+        </div>
+        <div v-else>
+          <h1>No recipes found...</h1>
+        </div>
+      </div>
+    </div>
+
     <div class="footer">
       <div id="button"></div>
         <div id="container">
