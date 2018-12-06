@@ -32,7 +32,7 @@
         <div id="toggle-input-type-switch">
           <label class="switch">
             <input type="checkbox" v-on:click="toggleInputType">
-            <span class="slider round"></span>
+            <span class="slider"></span>
           </label>
         </div>
 
@@ -61,36 +61,23 @@
         <h1>{{ recipesContainerTitle }}</h1>
 
         <div v-if="recipes.length">
-          <div class="styled-select blue semi-square">
-              <select v-model="filterOption" @change="sortByFilter">
-                <option value="1" selected="selected">Recipe: A to Z</option>
-                <option value="2">Recipe: Z to A</option>
-                <option value="3">Calories: High to Low</option>
-                <option value="4">Calories: Low to High</option>
-              </select>
-            </div>
-    
-            <div id="recipes-list-flexbox">
-              <recipes-list-item
-                v-for="recipe in recipes"
-                v-bind:recipe="recipe"
-              ></recipes-list-item>
-            </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer">
-      <div id="button"></div>
-        <div id="container">
-          <div id="cont">
-            <div class="footer_center">
-    	         <h3>We would like to thank </h3>
-               <h4><a href ="https://sugarspiceslife.com/"><cite>SUGAR SPICES LIFE</cite></a></h4>
-               <p> For amazing recipes.</p>
-            </div>
+          <div class="filter-select">
+            <select v-model="filterOption" @change="sortByFilter">
+              <option value="1" selected="selected">Recipe: A to Z</option>
+              <option value="2">Recipe: Z to A</option>
+              <option value="3">Calories: High to Low</option>
+              <option value="4">Calories: Low to High</option>
+            </select>
+          </div>
+  
+          <div id="recipes-list-flexbox">
+            <recipes-list-item
+              v-for="recipe in recipes"
+              v-bind:recipe="recipe"
+            ></recipes-list-item>
           </div>
         </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
